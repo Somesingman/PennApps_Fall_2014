@@ -4,6 +4,7 @@ var kitten = {
   health:50,
   name:"Sir Fluffykins",
   state:1
+  isAsleep: false;
 };
 
 addKitten = function(){
@@ -14,7 +15,7 @@ var updateKitten = function(){
 };
 
 var sleep = function(){
-  $("#kitten").attr("src", "kitten.jpg");
+  $("#sleep").attr("src", "kitten.jpg");
   if (isBlocking){
     isBlocking = false;
   }
@@ -22,12 +23,12 @@ var sleep = function(){
     isBlocking = true;
   }
 };
-
 var wake = function(){
-  $('#kitten').attr("src", "kitten.jpg");
+  //$('#sleep')
 };
 
 var openSettings = function(){
+  //$('#settings')
 };
 
 $(document).ready(function(){
@@ -36,9 +37,6 @@ $(document).ready(function(){
   });
   $(document).on('click', "#sleep", function(){
     sleep();
-  });
-  $(document).on('click', "#wake", function(){
-    wake();
   });
   $(document).on('click', "#sleep", function(){
     openSettings();
