@@ -77,9 +77,10 @@ var hoverOutPower = function(){
 };
 
 var hoverSetting = function(){
-
+  $("#settingsPic").attr("src", "images/power_gray.png");
 };
 var hoverOutSetting = function(){
+  $("#settingsPic").attr("src", "images/power_gray.png");
 };
 
 var sleepAndWake = function(){
