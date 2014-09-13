@@ -27,7 +27,7 @@ chrome.webRequest.onBeforeRequest.addListener(
 		},
     {
         urls: [
-            "*://*www.yahoo.com/*"
+            "*://*.yahoo.com/*"
         ]
     },
     ["blocking"]
