@@ -5,6 +5,11 @@ var kitten = {
   state:1
 };
 
+var test_redirect = function(){
+	$("#powerbtn").attr("src", "power_green.png");
+	isClicked = true;
+};
+
 var addKitten = function(){
 };
 
@@ -41,5 +46,9 @@ $(document).ready(function(){
   });
   $(document).on('click', "#sleep", function(){
     openSettings();
+
+  $(document).on('click', "#powerbtn", function(){
+    test_redirect();
+  });  
   });
 });
