@@ -9,8 +9,8 @@
     "https://secure.flickr.com/",
 	"webRequest",
 	"webRequestBlocking",
-	"*://*.yahoo.com/",
-	"*://*.google.com/",
+	"*://*.yahoo.com/*",
+	"*://*.google.com/*",
 	"*://*.evil.com/*"
   ],
   "browser_action": {
