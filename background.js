@@ -1,5 +1,6 @@
 // isBlocking = true when sites will be blocked
 var isBlocking = true;
+var isClicked = true;
 
 //dynamically changing icons
 var switchBlockingOnOff = function (){
@@ -19,6 +20,7 @@ var switchBlockingOnOff = function (){
 
 // redirecting code
 var host = "http://www.google.com";
+
 chrome.webRequest.onBeforeRequest.addListener(
         function() {
 			if(isBlocking){

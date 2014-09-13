@@ -42,7 +42,6 @@ var kitten = {
     else{
       $("#powerPic").attr("src", "power_gray.png");
     }
-
   };
 
   var addMode = function(){
@@ -75,6 +74,28 @@ var kitten = {
 var openSettings = function(){
 };
 
+var gear = function(){
+	console.log('function is running');
+	
+	window.location.href= "task_list.html";
+	
+
+	/*
+	Sample Code:
+	if(domains.contains(request.url)){
+    chrome.browserAction.setPopup({
+        popup: "tracking.html"
+    });
+
+	var para = document.createElement("p");
+	var node = document.createTextNode("This is new.");
+	para.appendChild(node);
+	var element = document.getElementById("main");
+	element.appendChild(para);
+	*/
+	
+};
+
 $(document).ready(function(){
   addKitten();
   addPowerButton();
@@ -93,3 +114,13 @@ $(document).ready(function(){
     openSettings();
   });
 });
+
+/*
+Progress Update:
+1) Got gear button to work on click, "this is new appears"
+
+Next Steps
+1) either render a new html page to display new task list
+2)
+ 
+*/
