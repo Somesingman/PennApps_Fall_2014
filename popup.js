@@ -6,7 +6,7 @@ var kitten = {
 };
 
 updateKitten = function(){
-  $('[name="kitten"]').attr("src", "icon.png");
+  $('[name="kitten"]').attr("src", "icon_on.png");
 }
 
 sleep = function(){
@@ -16,8 +16,4 @@ sleep = function(){
 wake = function(){
 
 }
-
-document.getElementById("kitten").addEventListener("onMouseOver", addKitten);
-document.getElementById("sleep").addEventListener("click", sleep);
-document.getElementById("wake").addEventListener("click", wake);
 
