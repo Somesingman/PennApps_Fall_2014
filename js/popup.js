@@ -160,7 +160,7 @@ var kittyUseBlock = function(){
     if(kitten.study_mode == 0){
       allBlock();
     }
-    else(){
+    else{
       pormodoro();
     }
   }
