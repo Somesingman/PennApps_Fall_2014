@@ -2,21 +2,7 @@
 <html>
   <head>
     <title>Getting Started Extension's Popup</title>
-    <style>
-      body {
-        min-width: 357px;
-        overflow-x: hidden;
-      }
-
-      img {
-        margin: 5px;
-        border: 2px solid black;
-        vertical-align: middle;
-        width: 75px;
-        height: 75px;
-      }
-    </style>
-
+    <link rel="stylesheet" type="text/css" href="popup.css">
     <!--
       - JavaScript and HTML must be in separate files: see our Content Security
       - Policy documentation[1] for details and explanation.
@@ -26,7 +12,22 @@
     <script src="popup.js"></script>
   </head>
   <body>
-    <img id="kitten" src="face_emoji.png" />
+    <div id="main">
+      <div title="Active" id="powerbtn">
+        <img src="power_green.png" class="clickable">
+      </div>
+      <div id="rightbtns">
+        <div title="Settings" id="settingsbtn">
+          <img src="gear.png" class="clickable">
+        </div>
+        <div title="Block All Mode" id="modebtn">
+          <img src="hand.png" class="clickable">
+        </div>
+      </div>
+      <div class="clear"></div>
+      <div id="kitty">
+        <img id="kittypic" src="placeholder.jpg">
+      </div>
+    </div>
   </body>
 </html>
-

@@ -1,4 +1,3 @@
-
 var kitten = {
   mood:"Happy", 
   health:50,
