@@ -11,7 +11,6 @@ var addKitten = function(){
 
 var updateKitten = function(){
   $("#kitten").attr("src", "kitten.jpg");
-  //alert("hi");
 };
 
 var sleep = function(){
@@ -35,8 +34,13 @@ $(document).ready(function(){
   $(document).on('click', "#kitten", function(){
     updateKitten();
   });
+  $(document).on('click', "#sleep", function(){
+    sleep();
+  });
+  $(document).on('click', "#wake", function(){
+    wake();
+  });
+  $(document).on('click', "#sleep", function(){
+    openSettings();
+  });
 });
-
-// $('#sleep').click(sleep(););
-// $('#wake').click(wake(););
-// $('#settings').click(openSetting(););
