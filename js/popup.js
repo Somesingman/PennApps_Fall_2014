@@ -19,7 +19,7 @@ var kitten = {
     study_mode:0,
       // 0 = default, all-blocking style
       // 1 = Pormodoro, interval style
-    timeout:35,
+    timeout:25,
   }
 
 //===== Functions called upon startup=====
@@ -127,26 +127,30 @@ var hoverOutSetting = function(){
   $("#settingsPic").attr("src", "images/gear.png");
 };
 
-//===== Click functions =====
+//===== Click and Other functions =====
 
-var counter = setInterval(timer,1000);
+var countdowner;
+var currentTime;
 
+//decrements time by 1 second intervals
 var timer = function(){
-  count = count - 1;
-  if (count <= 0)
+  timeout = timeout - 1000;
+  if (timeout <= 0)
   {
     clearInterval(counter);
   }
 };
 
 var pormodoro = function(){
-  kitten.timeout = jQuery.now();
+  currentTime = jQuery.now();
+  countdowner = setInterval(timer,1000);
+
+  //study mode, start blocking
   if (kitten.kitty_mode == 0){
-    //study mode, start blocking
     bg.switchBlockingOnOff();
   }
+  //party mode, turn off blocking
   else{
-    //party mode, turn off blocking
     bg.switchBlockingOnOff();
   }
 };
@@ -160,7 +164,8 @@ var kittyUseBlock = function(){
     if(kitten.study_mode == 0){
       allBlock();
     }
-    else(){
+    else{
+      kitty_mode = 0;
       pormodoro();
     }
   }
