@@ -9,7 +9,8 @@
       -
       - [1]: http://developer.chrome.com/extensions/contentSecurityPolicy.html
      -->
-    <script src="jquery-1.11.1.js"></script>
+    <script src="jquery-1.11.1.min.js"></script>
+    <script src="background.js"></script>
     <script src="popup.js"></script>
   </head>
   <body>
@@ -21,13 +22,13 @@
         <div title="Settings" id="settingsbtn">
           <img src="gear.png" class="clickable" >
         </div>
-        <div title="Block All Mode" id="modebtn">
-          <img src="hand.png" class="clickable">
+        <div id="modeTitle" title="Block All Mode" id="modebtn">
+          <img id="modePic"src="hand.png" class="clickable">
         </div>
       </div>
       <div class="clear"></div>
       <div id="kitty">
-        <img id="kittypic" src="placeholder.jpg">
+        <img id="kittyPic" src="placeholder.jpg">
       </div>
     </div>
   </body>

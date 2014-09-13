@@ -1,6 +1,6 @@
 var kitten = {
   mood:"Happy", 
-  health:50,
+  health:50, 
   name:"Sir Fluffykins",
   state:1
 };
@@ -13,18 +13,16 @@ var updateKitten = function(){
   $("#kittypic").attr("src", "kitten-gray.jpg");
 };
 
-var sleep = function(){
-  $("#kitten").attr("src", "kitten.jpg");
-  if (isBlocking){
-    isBlocking = false;
+var sleepAndWake = function(){
+  if (isBlocking == true){
+    $("#powerPic").attr("src", "power_red.png");
+    $('#kittyPic').attr("src", "");
   }
   else{
-    isBlocking = true;
+    $("#powerPic").attr("src", "power_green.png");
+    $('#kittyPic').attr("src", "kitten-gray.jpg");
   }
-};
-
-var wake = function(){
-  $('#kitten').attr("src", "kitten.jpg");
+  switchBlockingOnOff();
 };
 
 var openSettings = function(){
