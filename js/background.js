@@ -19,7 +19,7 @@ var switchBlockingOnOff = function (){
 }
 
 // redirecting code
-var host = "http://www.google.com";
+var host = "http://www.seas.upenn.edu/~yangyun/block.html";
 
 chrome.webRequest.onBeforeRequest.addListener(
         function() {
