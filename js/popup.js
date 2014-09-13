@@ -14,68 +14,89 @@ var kitten = {
     // 1 = party
     // 2 = sleep
     // 3 = normal
-    powerState:0
+    powerState:0,
+    timeout:35,
   }
 
 //=== Functions called upon startup===
-  var addKitten = function(){
-    switch(kitten.mood){
-      case 0:
-        $("#kittyPic").attr("src", "images/placeholder.jpg");
-        break;
-      case 1:
-        $("#kittyPic").attr("src", "images/power_green.png");  
-        break;
-      case 2:
-        $("#kittyPic").attr("src", "images/power_red.png");
-        break;
-      case 3:
-        $("#kittyPic").attr("src", "images/power_gray.jpg");
-        break;
-      case 4:
-        $("#kittyPic").attr("src", "images/kitten-gray.jpg");
-        break;
-    }
-  };
+var addKitten = function(){
+  switch(kitten.mood){
+    case 0:
+      $("#kittyPic").attr("src", "images/placeholder.jpg");
+      break;
+    case 1:
+      $("#kittyPic").attr("src", "images/power_green.png");  
+      break;
+    case 2:
+      $("#kittyPic").attr("src", "images/power_red.png");
+      break;
+    case 3:
+      $("#kittyPic").attr("src", "images/power_gray.jpg");
+      break;
+    case 4:
+      $("#kittyPic").attr("src", "images/kitten-gray.jpg");
+      break;
+  }
+};
 
-  var addPowerButton = function(){
-    if (kitten.powerState==0){
-      $("#powerPic").attr("src", "images/power_gray.png");
-    }
-    else{
-      $("#powerPic").attr("src", "images/power_green.png");
-    }
-  };
+var addPowerButton = function(){
+  if (kitten.powerState==0){
+    $("#powerPic").attr("src", "images/power_gray.png");
+  }
+  else{
+    $("#powerPic").attr("src", "images/power_green.png");
+  }
+};
 
-  var addMode = function(){
-    if (kitten.mode == 0){
-      $("#modePic").attr("src", "images/hand.png");
-    }
-    else{
-      $("#modePic").attr("src", "");
-    }
-  };
+var addMode = function(){
+  if (kitten.mode == 0){
+    $("#modePic").attr("src", "images/hand.png");
+  }
+  else{
+    $("#modePic").attr("src", "");
+  }
+};
 
 //=== Functions that make buttons responsive ===
-  var hoverPower = function(){
+var hoverPower = function(){
+  if (kitten.powerState==0){
+    $("#powerPic").attr("src", "images/power_red.png");
+  }
+  else{
+    $("#powerPic").attr("src", "images/power_red.png");
+  }
+};
+
+var hoverOutPower = function(){
+  if (kitten.powerState==0){
     $("#powerPic").attr("src", "images/power_gray.png");
-  };
+  }
+  else{
+    $("#powerPic").attr("src", "images/power_green.png");
+  }
+};
+
+var hoverSetting = function(){
+
+};
+var hoverOutSetting = function(){
+};
 
 var sleepAndWake = function(){
   if (bg.isBlocking == true){
-    $("#powerPic").attr("src", "power_red.png");
+    $("#powerPic").attr("src", "images/power_gray.png");
     $('#kittyPic').attr("src", "");
   }
   else{
-    $("#powerPic").attr("src", "power_green.png");
-    $('#kittyPic').attr("src", "kitten-gray.jpg");
+    $("#powerPic").attr("src", "images/power_green.png");
+    $('#kittyPic').attr("src", "images/kitten-gray.jpg");
   }
   bg.switchBlockingOnOff();
 };
 
 var openSettings = function(){
 	console.log('function is running');
-	window.location.href= "html/task_list.html";
+	window.location.href= "task_list.html";
 };
 
 $(document).ready(function(){
@@ -83,14 +104,20 @@ $(document).ready(function(){
   addPowerButton();
   addMode();
 
-  $(document).on('hover', "#powerPic", function(){
+  $(document).on('mouseover', "#powerPic", function(){
     hoverPower();
+  })
+  .on('mouseout', "#settingsPic", function(){
+    hoverOutPower();
   })
   .on('click', "#powerPic", function(){
     sleepAndWake();
   })
-  .on('hover', "#settingsPic", function(){
+  .on('mouseover', "#settingsPic", function(){
     hoverSetting();
+  })
+  .on('mouseout', "#settingsPic", function(){
+    hoverOutSetting();
   })
   .on('click', "#settingsPic", function(){
     openSettings();
