@@ -5,16 +5,12 @@ var kitten = {
   state:1
 };
 
-var test_redirect = function(){
-	$("#powerbtn").attr("src", "power_green.png");
-	isClicked = true;
-};
 
 var addKitten = function(){
 };
 
 var updateKitten = function(){
-  $("#kitten").attr("src", "kitten.jpg");
+  $("#kittypic").attr("src", "kitten-gray.jpg");
 };
 
 var sleep = function(){
@@ -34,21 +30,44 @@ var wake = function(){
 var openSettings = function(){
 };
 
-$(document).ready(function(){
-  $(document).on('click', "#kitten", function(){
-    updateKitten();
-  });
-  $(document).on('click', "#sleep", function(){
-    sleep();
-  });
-  $(document).on('click', "#wake", function(){
-    wake();
-  });
-  $(document).on('click', "#sleep", function(){
-    openSettings();
+var gear = function(){
+	console.log('function is running');
+	
+	window.location.href= "task_list.html";
+	
 
-  $(document).on('click', "#powerbtn", function(){
-    test_redirect();
-  });  
+	/*
+	Sample Code:
+	if(domains.contains(request.url)){
+    chrome.browserAction.setPopup({
+        popup: "tracking.html"
+    });
+
+	var para = document.createElement("p");
+	var node = document.createTextNode("This is new.");
+	para.appendChild(node);
+	var element = document.getElementById("main");
+	element.appendChild(para);
+	*/
+	
+};
+
+$(document).ready(function(){
+  $(document).on('click', "#kittypic", function(){
+    updateKitten();
+  })
+  .on('click', "#gear", function(){
+	    console.log('clicking gear is being registered');
+	    gear();
   });
 });
+
+/*
+Progress Update:
+1) Got gear button to work on click, "this is new appears"
+
+Next Steps
+1) either render a new html page to display new task list
+2)
+ 
+*/
