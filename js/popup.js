@@ -94,32 +94,78 @@ var sleepAndWake = function(){
   bg.switchBlockingOnOff();
 };
 
+//renders settings popup page 
 var openSettings = function(){
-	console.log('function is running');
-	window.location.href= "task_list.html";
+	window.location.href= "settings.html";
 };
+
+/*******************************
+Hack Functions
+*******************************/
+
+/*
+function get_submit_button() {
+    var submit = document.getElementbyId('submit_id');
+    for(var i=0; i < inputs.length; i++) {
+        var inp = inputs[i];
+        if(inp.type != 'submit') continue;
+        if(inp.value == 'Invoeren' && inp.name == 'submit') {
+            return inp;
+            break; // exits the loop
+        }
+    }
+    return false;
+}
+*/
+
+
+/*****************************
+Functions for activating study modes
+******************************/
+
+
 
 $(document).ready(function(){
   addKitten();
   addPowerButton();
   addMode();
 
-  $(document).on('mouseover', "#powerPic", function(){
+  $("#powerPic").on('mouseover', function(){
     hoverPower();
-  })
-  .on('mouseout', "#settingsPic", function(){
-    hoverOutPower();
-  })
-  .on('click', "#powerPic", function(){
+  });
+ 
+  //Activate blocking mode
+  $("#block_id").on('click', function(event){
+    var event_id = event.currentTarget.id;
+    console.log("block_id clicked");
+
+  });
+
+  //Activate study mode
+  $("#study_id").on('click',function(event){
+    var event_id = event.currentTarget.id;
+    console.log('study_id clicked');
+  });
+
+  //Confirm final study mode by clicking submit
+  $("#submit_id").on('click',function(event){
+    var event_id = event.currentTarget.id;
+    console.log('submit_id clicked');
+  });
+ 
+  $("#powerPic").on('click', function(){
     sleepAndWake();
-  })
-  .on('mouseover', "#settingsPic", function(){
+  });
+ 
+  $("#settingsPic").on('mouseover', function(){
     hoverSetting();
-  })
-  .on('mouseout', "#settingsPic", function(){
+  });
+ 
+  $("#settingsPic").on('mouseout', function(){
     hoverOutSetting();
-  })
-  .on('click', "#settingsPic", function(){
+  });
+
+  $('#settingsPic').on('click', function(){
     openSettings();
   });
 });
