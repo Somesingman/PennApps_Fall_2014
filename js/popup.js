@@ -1,3 +1,5 @@
+var bg = chrome.extension.getBackgroundPage();
+
 var kitten = {
   mood:0,
     // 0 = happy
@@ -59,18 +61,18 @@ var kitten = {
     $("#powerPic").attr("src", "images/power_gray.png");
   };
 
-  var sleepAndWake = function(){
-    console.log("hi")
-    if (isBlocking == true){
-      $("#powerPic").attr("src", "images/power_gray.png");
-      $('#kittyPic').attr("src", "");
-    }
-    else{
-      $("#powerPic").attr("src", "images/power_green.png");
-      $('#kittyPic').attr("src", "images/kitten-gray.jpg");
-    }
-    switchBlockingOnOff();
-  };
+var sleepAndWake = function(){
+  if (bg.isBlocking == true){
+    $("#powerPic").attr("src", "power_red.png");
+    $('#kittyPic').attr("src", "");
+  }
+  else{
+    $("#powerPic").attr("src", "power_green.png");
+    $('#kittyPic').attr("src", "kitten-gray.jpg");
+  }
+  bg.switchBlockingOnOff();
+};
+
 var openSettings = function(){
 	console.log('function is running');
 	window.location.href= "html/task_list.html";
