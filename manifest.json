@@ -6,7 +6,7 @@
   "version": "1.0",
   "background": {"scripts":["background.js"]},
   "permissions": [
-    "https://secure.flickr.com/",
+  "https://secure.flickr.com/",
 	"webRequest",
 	"webRequestBlocking",
 	"*://*.yahoo.com/",
