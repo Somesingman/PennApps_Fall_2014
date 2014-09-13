@@ -1,10 +1,23 @@
-// Copyright (c) 2012 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
 
-/**
- * Global variable containing the query we'd like to pass to Flickr. In this
- * case, kittens!
- *
- * @type {string}
- */
+var kitten = {
+  mood:"Happy", 
+  health:50,
+  name:"Sir Fluffykins"
+};
+
+updateKitten = function(){
+  $('[name="kitten"]').attr("src", "icon.png");
+}
+
+sleep = function(){
+  //$('[name="kitten"]'.attr("));
+}
+
+wake = function(){
+
+}
+
+document.getElementById("kitten").addEventListener("onMouseOver", addKitten);
+document.getElementById("sleep").addEventListener("click", sleep);
+document.getElementById("wake").addEventListener("click", wake);
+
