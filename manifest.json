@@ -1,10 +1,10 @@
 {
   "manifest_version": 2,
 
-  "name": "One-click Kittens",
+  "name": "Study Buddy Kitty",
   "description": "This extension demonstrates a browser action with kittens.",
   "version": "1.0",
-  "background": {"scripts":["background.js"]},
+  "background": {"scripts":["js/background.js"]},
   "permissions": [
 	"webRequest",
 	"webRequestBlocking",
@@ -12,6 +12,6 @@
   ],
   "browser_action": {
     "default_icon": "images/icon_on.png",
-    "default_popup": "html/popup.html"
+    "default_popup": "popup.html"
   }
 }

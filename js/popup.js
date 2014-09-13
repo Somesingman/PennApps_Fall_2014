@@ -15,6 +15,7 @@ var kitten = {
     powerState:0
   }
 
+//=== Functions called upon startup===
   var addKitten = function(){
     switch(kitten.mood){
       case 0:
@@ -45,14 +46,15 @@ var kitten = {
   };
 
   var addMode = function(){
-    if (kittem.mode == 0){
-      $("#modePic").attr("src", "images/hand.jpg");
+    if (kitten.mode == 0){
+      $("#modePic").attr("src", "images/hand.png");
     }
     else{
       $("#modePic").attr("src", "");
     }
   };
 
+//=== Functions that make buttons responsive ===
   var hoverPower = function(){
     $("#powerPic").attr("src", "images/power_gray.png");
   };
