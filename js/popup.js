@@ -77,9 +77,10 @@ var hoverOutPower = function(){
 };
 
 var hoverSetting = function(){
-
+  $("#settingsPic").attr("src", "images/power_green.png");
 };
 var hoverOutSetting = function(){
+  $("#settingsPic").attr("src", "images/gear.png");
 };
 
 var sleepAndWake = function(){
@@ -107,7 +108,7 @@ $(document).ready(function(){
   $(document).on('mouseover', "#powerPic", function(){
     hoverPower();
   })
-  .on('mouseout', "#settingsPic", function(){
+  .on('mouseleave', "#powerPic", function(){
     hoverOutPower();
   })
   .on('click', "#powerPic", function(){
@@ -116,7 +117,7 @@ $(document).ready(function(){
   .on('mouseover', "#settingsPic", function(){
     hoverSetting();
   })
-  .on('mouseout', "#settingsPic", function(){
+  .on('mouseleave', "#settingsPic", function(){
     hoverOutSetting();
   })
   .on('click', "#settingsPic", function(){
