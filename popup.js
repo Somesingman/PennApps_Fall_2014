@@ -6,7 +6,7 @@ var kitten = {
   state:1
 };
 
-addKitten = function(){
+var addKitten = function(){
 };
 
 var updateKitten = function(){
@@ -14,7 +14,7 @@ var updateKitten = function(){
   //alert("hi");
 };
 
-sleep = function(){
+var sleep = function(){
   $("#kitten").attr("src", "kitten.jpg");
   if (isBlocking){
     isBlocking = false;
@@ -24,11 +24,11 @@ sleep = function(){
   }
 };
 
-wake = function(){
+var wake = function(){
   $('#kitten').attr("src", "kitten.jpg");
 };
 
-openSettings = function(){
+var openSettings = function(){
 };
 
 $(document).ready(function(){
