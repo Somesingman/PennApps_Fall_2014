@@ -1,3 +1,5 @@
+var bg = chrome.extension.getBackgroundPage();
+
 var kitten = {
   mood:"Happy", 
   health:50, 
@@ -13,7 +15,7 @@ var updateKitten = function(){
 };
 
 var sleepAndWake = function(){
-  if (isBlocking == true){
+  if (bg.isBlocking == true){
     $("#powerPic").attr("src", "power_red.png");
     $('#kittyPic').attr("src", "");
   }
@@ -21,7 +23,8 @@ var sleepAndWake = function(){
     $("#powerPic").attr("src", "power_green.png");
     $('#kittyPic').attr("src", "kitten-gray.jpg");
   }
-  switchBlockingOnOff();
+  bg.switchBlockingOnOff();
+  console.log(bg.isBlocking);
 };
 
 var openSettings = function(){
