@@ -18,82 +18,60 @@ var kitten = {
   var addKitten = function(){
     switch(kitten.mood){
       case 0:
-      $("#kittyPic").attr("src", "placeholder.jpg");
-      break;
+        $("#kittyPic").attr("src", "images/placeholder.jpg");
+        break;
       case 1:
-      $("#kittyPic").attr("src", "power_green.png");  
-      break;
+        $("#kittyPic").attr("src", "images/power_green.png");  
+        break;
       case 2:
-      $("#kittyPic").attr("src", "power_red.png");
-      break;
+        $("#kittyPic").attr("src", "images/power_red.png");
+        break;
       case 3:
-      $("#kittyPic").attr("src", "power_gray.jpg");
-      break;
+        $("#kittyPic").attr("src", "images/power_gray.jpg");
+        break;
       case 4:
-      $("#kittyPic").attr("src", "kitten-gray.jpg");
-      break;
+        $("#kittyPic").attr("src", "images/kitten-gray.jpg");
+        break;
     }
   };
 
   var addPowerButton = function(){
-    if (kitten.powerState){
-      $("#powerPic").attr("src", "power_green.png");
+    if (kitten.powerState==0){
+      $("#powerPic").attr("src", "images/power_gray.png");
     }
     else{
-      $("#powerPic").attr("src", "power_gray.png");
+      $("#powerPic").attr("src", "images/power_green.png");
     }
   };
 
   var addMode = function(){
-    switch(kitten.mode){
-      case 0:
-      break;
-      case 1:
-      break;
+    if (kittem.mode == 0){
+      $("#modePic").attr("src", "images/hand.jpg");
     }
-    $("#modePic").attr("src", "");
+    else{
+      $("#modePic").attr("src", "");
+    }
   };
 
   var hoverPower = function(){
-    $("#powerPic").attr("src", "power_gray.png");
+    $("#powerPic").attr("src", "images/power_gray.png");
   };
 
   var sleepAndWake = function(){
+    console.log("hi")
     if (isBlocking == true){
-      $("#powerPic").attr("src", "power_gray.png");
+      $("#powerPic").attr("src", "images/power_gray.png");
       $('#kittyPic').attr("src", "");
     }
     else{
-      $("#powerPic").attr("src", "power_green.png");
-      $('#kittyPic').attr("src", "kitten-gray.jpg");
+      $("#powerPic").attr("src", "images/power_green.png");
+      $('#kittyPic').attr("src", "images/kitten-gray.jpg");
     }
     switchBlockingOnOff();
   };
-
-// MIGHT BE ANDY'S FUNCTION THAT DOES openSettings
 var openSettings = function(){
-};
-
-var gear = function(){
 	console.log('function is running');
-	
-	window.location.href= "task_list.html";
-	
-
-	/*
-	Sample Code:
-	if(domains.contains(request.url)){
-    chrome.browserAction.setPopup({
-        popup: "tracking.html"
-    });
-
-	var para = document.createElement("p");
-	var node = document.createTextNode("This is new.");
-	para.appendChild(node);
-	var element = document.getElementById("main");
-	element.appendChild(para);
-	*/
-	
+	window.location.href= "html/task_list.html";
 };
 
 $(document).ready(function(){
@@ -114,13 +92,3 @@ $(document).ready(function(){
     openSettings();
   });
 });
-
-/*
-Progress Update:
-1) Got gear button to work on click, "this is new appears"
-
-Next Steps
-1) either render a new html page to display new task list
-2)
- 
-*/

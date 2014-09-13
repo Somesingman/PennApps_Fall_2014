@@ -7,13 +7,13 @@ var switchBlockingOnOff = function (){
 	if(isBlocking){
 		//alert("was blocking");
 		isBlocking = false;
-		chrome.browserAction.setIcon({path: '/icon_off.png'});
+		chrome.browserAction.setIcon({path: 'images/icon_off.png'});
 		//alert("now not blocking");
 	}
 	else{
 		//alert("was not blocking");
 		isBlocking = true;
-		chrome.browserAction.setIcon({path: '/icon_on.png'});
+		chrome.browserAction.setIcon({path: 'images/icon_on.png'});
 		//alert("now blocking");
 	}
 }
