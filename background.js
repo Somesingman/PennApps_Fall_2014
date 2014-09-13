@@ -4,16 +4,16 @@ var isBlocking = true;
 //dynamically changing icons
 var switchBlockingOnOff = function (){
 	if(isBlocking){
-		alert("was blocking");
+		//alert("was blocking");
 		isBlocking = false;
 		chrome.browserAction.setIcon({path: '/icon_off.png'});
-		alert("now not blocking");
+		//alert("now not blocking");
 	}
 	else{
-		alert("was not blocking");
+		//alert("was not blocking");
 		isBlocking = true;
 		chrome.browserAction.setIcon({path: '/icon_on.png'});
-		alert("now blocking");
+		//alert("now blocking");
 	}
 }
 
@@ -27,7 +27,7 @@ chrome.webRequest.onBeforeRequest.addListener(
 		},
     {
         urls: [
-            "*://*www.yahoo.com/*"
+            "*://*.yahoo.com/*"
         ]
     },
     ["blocking"]
