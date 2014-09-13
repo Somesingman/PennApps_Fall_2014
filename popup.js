@@ -10,37 +10,33 @@ var addKitten = function(){
 };
 
 var updateKitten = function(){
-  $("#kitten").attr("src", "kitten.jpg");
+  $("#kittyPic").attr("src", "kitten.jpg");
 };
 
-var sleep = function(){
-  $("#kitten").attr("src", "kitten.jpg");
-  if (isBlocking){
-    isBlocking = false;
+var sleepAndWake = function(){
+  if (isBlocking == true){
+    $("#powerPic").attr("src", "power_red.png");
+    $('#kittyPic').attr("src", "face_emoji.jpg");
   }
   else{
-    isBlocking = true;
+    $("#powerPic").attr("src", "power_green.png");
+    $('#kittyPic').attr("src", "kitten.jpg");
   }
+  switchBlockingOnOff();
 };
 
 var wake = function(){
-  $('#kitten').attr("src", "kitten.jpg");
+  $('#kittyPic').attr("src", "kitten.jpg");
 };
 
 var openSettings = function(){
 };
 
 $(document).ready(function(){
-  $(document).on('click', "#kitten", function(){
+  $(document).on('click', "#kittyPic", function(){
     updateKitten();
   });
-  $(document).on('click', "#sleep", function(){
-    sleep();
-  });
-  $(document).on('click', "#wake", function(){
-    wake();
-  });
-  $(document).on('click', "#sleep", function(){
-    openSettings();
+  $(document).on('click', "#powerPic", function(){
+    sleepAndWake();
   });
 });
