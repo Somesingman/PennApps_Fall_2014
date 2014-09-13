@@ -1,6 +1,6 @@
 var bg = chrome.extension.getBackgroundPage();
 
-var kitten = {
+/*var kitten = {
   mood:0,
     // 0 = happy
     // 1 = neutral
@@ -15,9 +15,8 @@ var kitten = {
     // 2 = sleep
     // 3 = normal
     powerState:0
-  }
+  }*/
 
-//=== Functions called upon startup===
   var addKitten = function(){
     switch(kitten.mood){
       case 0:
@@ -48,15 +47,14 @@ var kitten = {
   };
 
   var addMode = function(){
-    if (kitten.mode == 0){
-      $("#modePic").attr("src", "images/hand.png");
+    if (kittem.mode == 0){
+      $("#modePic").attr("src", "images/hand.jpg");
     }
     else{
       $("#modePic").attr("src", "");
     }
   };
 
-//=== Functions that make buttons responsive ===
   var hoverPower = function(){
     $("#powerPic").attr("src", "images/power_gray.png");
   };
