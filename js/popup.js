@@ -1,6 +1,6 @@
 var bg = chrome.extension.getBackgroundPage();
 
-/*var kitten = {
+var kitten = {
   mood:0,
       // 0 = happy
       // 1 = neutral
@@ -20,7 +20,7 @@ var bg = chrome.extension.getBackgroundPage();
       // 0 = default, all-blocking style
       // 1 = Pomodoro, interval style
     timeout:35,
-  }*/
+  }
 
 
 //===== Functions called upon startup=====
@@ -161,7 +161,7 @@ var kittyUseBlock = function(){
     if(kitten.study_mode == 0){
       allBlock();
     }
-    else(){
+    else{
       pormodoro();
     }
   }

@@ -1,6 +1,6 @@
 // isBlocking = true when sites will be blocked
 var isBlocking = false;
-
+/*
 var kitten = {
     name:"Sir Fluffykins",
 	health:50, 
@@ -18,7 +18,7 @@ var kitten = {
 }
   
 chrome.storage.sync.set({'kitten': kitten});
-
+*/
 //dynamically changing icons
 var switchBlockingOnOff = function (){
 	
@@ -41,13 +41,13 @@ var getKitten = function(){
 	chrome.storage.sync.get('kitten', function(result){return result};
 }
 */
-
+/*
 //store kitten
 var storeKitten = function(newName, health, mood, mode, powerState){
 	var newKitten;
 	newKitten = 
 }
-
+*/
 
 // redirecting code
 var host = "http://www.seas.upenn.edu/~yangyun/block.html";
