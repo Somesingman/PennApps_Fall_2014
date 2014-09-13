@@ -18,7 +18,7 @@ var kitten = {
       // 1 = kitty on
     study_mode:0,
       // 0 = default, all-blocking style
-      // 1 = Pomodoro, interval style
+      // 1 = Pormodoro, interval style
     timeout:35,
   }
 
@@ -143,11 +143,11 @@ var timer = function(){
 var pormodoro = function(){
   kitten.timeout = jQuery.now();
   if (kitten.kitty_mode == 0){
-    //start blocking
+    //study mode, start blocking
     bg.switchBlockingOnOff();
   }
   else{
-    //turn off blocking
+    //party mode, turn off blocking
     bg.switchBlockingOnOff();
   }
 };
