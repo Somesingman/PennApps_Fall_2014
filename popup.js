@@ -9,13 +9,13 @@ var kitten = {
 addKitten = function(){
 };
 
-updateKitten = function(){
-  $("#kitten").attr("src", "");
-  alert("hi");
+var updateKitten = function(){
+  $("#kitten").attr("src", "kitten.jpg");
+  //alert("hi");
 };
 
 sleep = function(){
-  $("#kitten").attr("src", "");
+  $("#kitten").attr("src", "kitten.jpg");
   if (isBlocking){
     isBlocking = false;
   }
@@ -25,14 +25,18 @@ sleep = function(){
 };
 
 wake = function(){
-  $('#kitten').attr("src", "")
+  $('#kitten').attr("src", "kitten.jpg");
 };
 
 openSettings = function(){
-
 };
 
-$('#kitten').load(function(){updateKitten();});
-$('#sleep').click()
-$('#wake').click()
-$('#settings').click()
+$(document).ready(function(){
+  $(document).on('click', "#kitten", function(){
+    updateKitten();
+  });
+});
+
+// $('#sleep').click(sleep(););
+// $('#wake').click(wake(););
+// $('#settings').click(openSetting(););
