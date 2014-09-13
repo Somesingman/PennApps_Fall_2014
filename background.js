@@ -1,9 +1,9 @@
 // isBlocking = true when sites will be blocked
-var isBlocking = true;
-var isClicked = true;
+var isBlocking = false;
 
 //dynamically changing icons
 var switchBlockingOnOff = function (){
+	
 	if(isBlocking){
 		//alert("was blocking");
 		isBlocking = false;
