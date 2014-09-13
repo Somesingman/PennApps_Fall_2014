@@ -2,22 +2,37 @@
 var kitten = {
   mood:"Happy", 
   health:50,
-  name:"Sir Fluffykins"
+  name:"Sir Fluffykins",
+  state:1
+};
+
+addKitten = function(){
 };
 
 updateKitten = function(){
-  $('[name="kitten"]').attr("src", "icon.png");
-}
+  $("#kitten").attr("src", "");
+  alert("hi");
+};
 
 sleep = function(){
-  //$('[name="kitten"]'.attr("));
-}
+  $("#kitten").attr("src", "");
+  if (isBlocking){
+    isBlocking = false;
+  }
+  else{
+    isBlocking = true;
+  }
+};
 
 wake = function(){
+  $('#kitten').attr("src", "")
+};
 
-}
+openSettings = function(){
 
-document.getElementById("kitten").addEventListener("onMouseOver", addKitten);
-document.getElementById("sleep").addEventListener("click", sleep);
-document.getElementById("wake").addEventListener("click", wake);
+};
 
+$('#kitten').load(function(){updateKitten();});
+$('#sleep').click()
+$('#wake').click()
+$('#settings').click()
