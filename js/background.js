@@ -43,15 +43,13 @@ var reset = function(){
 	study_mode = 0;
 	  // 0 = default, all-blocking style
 	  // 1 = Pomodoro, interval style
-	timeout = 35;
-	total_time = 90;
+	timeout = 3;
 	chrome.storage.sync.set({'mood': mood});
 	chrome.storage.sync.set({'health': health});
 	chrome.storage.sync.set({'name': name});
 	chrome.storage.sync.set({'kitty_mode': kitty_mode});
 	chrome.storage.sync.set({'study_mode': study_mode});
 	chrome.storage.sync.set({'timeout': timeout});
-	chrome.storage.sync.set({'total_time': total_time});
 	chrome.storage.sync.set({'firsttime': 0});
 };
 

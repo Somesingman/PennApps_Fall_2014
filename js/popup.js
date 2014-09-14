@@ -38,8 +38,6 @@ var study_mode;
 chrome.storage.sync.get('study_mode', function(result){study_mode = result.study_mode;});
 var timeout;
 chrome.storage.sync.get('timeout', function(result){timeout = result.timeout;});
-var total_time;
-chrome.storage.sync.get('total_time', function(result){total_time = result.total_time;});
 
 
 //===== Functions called upon startup=====
@@ -48,57 +46,52 @@ chrome.storage.sync.get('total_time', function(result){total_time = result.total
 //Have to check if it's blocking, if so use nested switches
 //If not blocking, add a sleeping cat
 var addKitten = function(){
-  // will probably have to nest switch statements
-  switch(mood){
-    //happy
+  switch(kitty_mode){
     case 0:
-      switch(kitty_mode){
+      switch(mood){
         case 0:
-          $("#kittyPic").attr("src", "images/placeholder.jpg");
+          $("#kittyPic").attr("src", "images/kitten_gray.jpg");
           break;
         case 1:
           $("#kittyPic").attr("src", "images/placeholder.jpg");
           break;
+        case 2:
+          $("#kittyPic").attr("src", "images/placeholder.jpg");
+          break;
+        case 3:
+          $("#kittyPic").attr("src", "images/placeholder.jpg");
+          break;
+        case 4:
+          $("#kittyPic").attr("src", "images/placeholder.jpg");
+          break;
       }
-    //neutral
     case 1:
-      switch(kitty_mode){
+      switch(mood){
         case 0:
           $("#kittyPic").attr("src", "images/placeholder.jpg");
           break;
         case 1:
           $("#kittyPic").attr("src", "images/placeholder.jpg");
           break;
+        case 2:
+           $("#kittyPic").attr("src", "images/placeholder.jpg");
+          break;
+        case 3:
+          $("#kittyPic").attr("src", "images/placeholder.jpg");
+          break;
+        case 4:
+          $("#kittyPic").attr("src", "images/placeholder.jpg");
+          break;
       }
-    //disappointed
     case 2:
-      switch(kitty_mode){
-        case 0:
-          $("#kittyPic").attr("src", "images/placeholder.jpg");
-          break;
-        case 1:
-          $("#kittyPic").attr("src", "images/placeholder.jpg");
-          break;
-      }
-    //sadz
-    case 3:
-      switch(kitty_mode){
-        case 0:
-          $("#kittyPic").attr("src", "images/placeholder.jpg");
-          break;
-        case 1:
-          $("#kittyPic").attr("src", "images/placeholder.jpg");
-          break;
-      }
-    //dedz
-    case 4:
       $("#kittyPic").attr("src", "images/placeholder.jpg");
+      break;  
   }
 };
 
 //Add state of power button at opening of extension
 var addPowerButton = function(){
-  if (powerState==0){
+  if (powerState == 0){
     $("#powerPic").attr("src", "images/power_gray.png");
   }
   else{
@@ -112,9 +105,13 @@ var addMode = function(){
     $("#modePic").attr("src", "images/hand.png");
   }
   else{
-    $("#modePic").attr("src", "");
+    $("#modePic").attr("src", "images/clock.png");
   }
 };
+
+var addSettings = function(){
+  $("#settingsPic").attr("src", "images/gear.png");
+}
 
 //===== Functions that make buttons responsive =====
 
@@ -149,41 +146,41 @@ var hoverOutSetting = function(){
 
 //===== Click and Other functions =====
 
-var twentyfiveMin = 60 * 1000 * 25;
-var fiveMin = 60 * 1000 * 5;
-var timeLeft;
+var twentyfiveMin = 1000*10//60 * 1000 * 25;
+var fiveMin = 1000*15//60 * 1000 * 5;
 var studyTimer;
 var partyTimer;
 
-//decrements time by 1 second intervals
-var timer = function(){
-  timeLeft = timeLeft - 1000;
-  if (timeLeft <= 0)
-  {
-    clearInterval(counter);
-  }
-};
-
 var switchToParty = function(){
-  studyTimer = setInterval(switchToStudy(), twentyfiveMin);
+  clearInterval(studyTimer);
+  console.log("hi");
+  timeout++;
+  chrome.storage.sync.set({'timeout': timeout});
+  bg.switchBlockingOnOff();
+  partyTimer = setInterval(switchToStudy, fiveMin);
 };
 
 var switchToStudy = function(){
-  partyTimer = setInterval(switchToParty(), fiveMin);
+  if (switchToParty != null){
+    clearInterval(partyTimer);
+  }
+  console.log("bye");
+  chrome.storage.sync.get('timeout', function(result){timeout = result.timeout;});
+  if (timeout < 3){
+    bg.switchBlockingOnOff();
+    studyTimer = setInterval(switchToParty, twentyfiveMin);
+    console.log(timeout);
+  }
+  else{
+    console.log("exit")
+  }
 };
 
 var pormodoro = function(){
-  currentTime = jQuery.now();
-  countdowner = setInterval(timer,1000);
-
-  //study mode, start blocking
-  if (kitten.kitty_mode == 0){
-    bg.switchBlockingOnOff();
-  }
-  //party mode, turn off blocking
-  else{
-    bg.switchBlockingOnOff();
-  }
+  bg.switchBlockingOnOff();
+  timeout = 0;
+  chrome.storage.sync.set({'timeout': timeout});
+  studyTimer = setInterval(switchToParty, twentyfiveMin);
 };
 
 var allBlock = function(){
@@ -224,18 +221,32 @@ var sleepAndWake = function(){
   }
 };
 
+var turnOff = function(){
+    $("#powerPic").attr("src", "images/power_gray.png");
+    $('#kittyPic').attr("src", "kitten-gray.jpg");
+};
+
+//go bak to the home page
+var go_home = function(){
+  window.location.href="popup.html";
+};
+
 //open up settings window
 var openSettings = function(){
+  turnOff();
 	window.location.href= "settings.html";
 };
 
 //===== Adding listeners and running functions define above =====
 $(document).ready(function(){
-  addKitten();
-  addPowerButton();
-  addMode();
+    addSettings();
+    setTimeout(function(){
+      addMode();
+      addKitten();
+      addPowerButton();
+    }, 200);
 
-   /*******************
+  /*******************
   powerPic functionality
   *******************/
   $("#powerPic").on('mouseover', function(){
@@ -274,21 +285,25 @@ $(document).ready(function(){
  
   //Activate blocking mode
   $("#block_id").on('click', function(event){
-    var event_id = event.currentTarget.id;
-    console.log("block_id clicked");
-
+    study_mode = 0;
+    chrome.storage.sync.set({'study_mode': study_mode});
+    console.log("block")
   });
 
   //Activate study mode
   $("#study_id").on('click',function(event){
-    var event_id = event.currentTarget.id;
-    console.log('study_id clicked');
+    study_mode = 1;
+    chrome.storage.sync.set({'study_mode': study_mode});
+    console.log("study");
   });
 
   //Confirm final study mode by clicking submit
-  $("#submit_id").on('click',function(event){
+  $("#back_id").on('click',function(event){
+    console.log("back");
     var event_id = event.currentTarget.id;
-    console.log('submit_id clicked');
+    if (event_id){
+      go_home();
+    }
   });
 });
 
