@@ -184,14 +184,44 @@ var hoverOutPower = function(){
   }
 };
 
+/*************
+Hover functions
+*************/
+
 //Show hover image of settings button
 var hoverSetting = function(){
-  $("#settingsPic").attr("src", "images/power_red.png");
+  $("#settingsPic").attr("src", "images/gear_dark.png");
 };
+
 //Revert back to original image of settings button
 var hoverOutSetting = function(){
   $("#settingsPic").attr("src", "images/gear.png");
 };
+
+var hoverBlock_id = function(){
+  $("#block_id").attr("src", "images/hand_light.png");
+};
+
+var hoverOutBlock_id = function(){
+  $("#block_id").attr("src", "images/hand.png");
+};
+
+var hoverStudy_id = function(){
+  $("#study_id").attr("src", "images/clock_light.png");
+};
+
+var hoverOutStudy_id = function(){
+  $("#study_id").attr("src", "images/clock.png");
+};
+
+var hoverBack_id = function(){
+  $("#back_id").attr("src", "images/arrow_light.png");
+};
+
+var hoverOutBack_id = function(){
+  $("#back_id").attr("src", "images/arrow.png");
+};
+
 
 //===== Click and Other functions =====
 
@@ -320,25 +350,57 @@ $(document).ready(function(){
   $('#settingsPic').on('click', function(){
     openSettings();
   });
-  
 
-  /*****************
-  Settings button : Productivity Modes functionality
+
+  /*******************
+  settings.html buttons functionality
   *******************/
+  
+  // 1) block_id  - Works! (all 3 functions)
+  $("#block_id").on('mouseover', function(){
+    console.log('hover block_id')
+    hoverBlock_id();
+  });
  
-  //Activate blocking mode
-  $("#block_id").on('click', function(event){
+  $("#block_id").on('mouseleave', function(){
+    console.log('hoverout block_id')
+    hoverOutBlock_id();
+  });
+
+   $("#block_id").on('click', function(event){
+    // add image to indicate button has been clicked
+    console.log("click block_id")
     study_mode = 0;
     chrome.storage.sync.set({'study_mode': study_mode});
   });
 
-  //Activate study mode
-  $("#study_id").on('click',function(event){
-    study_mode = 1;
-    chrome.storage.sync.set({'study_mode': study_mode});
+  // 2) study_id  Works! (all 3 functions)
+  $("#study_id").on('mouseover', function(){
+    console.log("hover study_id")
+    hoverStudy_id();
+  });
+ 
+  $("#study_id").on('mouseleave', function(){
+    console.log("hoverout study_id")
+    hoverOutStudy_id();
   });
 
-  //Confirm final study mode by clicking submit
+  $("#study_id").on('click',function(event){
+    // add image to indicate button has been clciked 
+    study_mode = 1;
+    chrome.storage.sync.set({'study_mode': study_mode});
+    console.log("click study_id")
+  });
+
+  // 3) back_id (Works! - all 3 functions)
+  $("#back_id").on('mouseover', function(){
+    hoverBack_id();
+  });
+ 
+  $("#back_id").on('mouseleave', function(){
+    hoverOutBack_id();
+  });
+
   $("#back_id").on('click',function(event){
     var event_id = event.currentTarget.id;
     if (event_id){
