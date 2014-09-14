@@ -32,7 +32,7 @@ var reset = function(){
 	  // 2 = disappointed
 	  // 3 = sads
 	  // 4 = dedz
-	health = 50; 
+	health = 5; 
 	name = "Sir Fluffykins";
 	kitty_mode = 2;
 	  // 0 = glasses => will have a mood
@@ -91,6 +91,9 @@ var host = "http://www.seas.upenn.edu/~yangyun/block.html";
 chrome.webRequest.onBeforeRequest.addListener(
         function() {
 			if(isBlocking){
+				chrome.storage.sync.get('health', function(result){health = result.health;});
+				health--;
+				chrome.storage.sync.set({'health': health});
 				return {redirectUrl: host};
 			}
 		},

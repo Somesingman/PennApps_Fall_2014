@@ -42,24 +42,58 @@ chrome.storage.sync.get('timeout', function(result){timeout = result.timeout;});
 
 //===== Functions called upon startup=====
 
+var updateKittyMood = function(){
+  chrome.storage.sync.get('health', function(result){health = result.health;});
+  
+  console.log(mood);
+  console.log(health);
+
+  switch(health){
+    case 0:
+      mood = 4;
+      chrome.storage.sync.set({'mood': mood});
+      break;
+    case 1:
+      mood = 3;
+      chrome.storage.sync.set({'mood': mood});
+      break;
+    case 2:
+      mood = 2;
+      chrome.storage.sync.set({'mood': mood});
+      break;
+    case 3:
+      mood = 1;
+      chrome.storage.sync.set({'mood': mood});
+      break;
+    case 4:
+      mood = 0;
+      chrome.storage.sync.set({'mood': mood});
+      break;
+  }
+};
+
 //Add kitty based on the state at opening of extension
 //Have to check if it's blocking, if so use nested switches
 //If not blocking, add a sleeping cat
 var addKitten = function(){
-chrome.storage.sync.get('kitty_mode', function(result){kitty_mode = result.kitty_mode;});
-chrome.storage.sync.get('mood', function(result){mood = result.mood;});
+  chrome.storage.sync.get('kitty_mode', function(result){kitty_mode = result.kitty_mode;});
+  chrome.storage.sync.get('mood', function(result){mood = result.mood;});
+
+  updateKittyMood();
+  chrome.storage.sync.get('mood', function(result){mood = result.mood;});
+
+
   switch(kitty_mode){
     //study
     case 0:
       switch(mood){
         //happy
         case 0:
-        console.log("hi 1");
-          $("#kittyPic").attr("src", "images/party_happy.gif");
+          $("#kittyPic").attr("src", "images/study_happy.gif");
           break;
         //meh
         case 1:
-          $("#kittyPic").attr("src", "images/party_meh.gif");
+          $("#kittyPic").attr("src", "images/study_meh.gif");
           break;
         //sad
         case 2:
@@ -80,11 +114,11 @@ chrome.storage.sync.get('mood', function(result){mood = result.mood;});
       switch(mood){
         //happy
         case 0:
-          $("#kittyPic").attr("src", "images/study_happy.gif");
+          $("#kittyPic").attr("src", "images/party_happy.gif");
           break;
         //meh
         case 1:
-          $("#kittyPic").attr("src", "images/study_meh.gif");
+          $("#kittyPic").attr("src", "images/party_meh.gif");
           break;
         //sad
         case 2:
@@ -102,7 +136,6 @@ chrome.storage.sync.get('mood', function(result){mood = result.mood;});
       break;
     //sleep
     case 2:
-    console.log("hi2");
       $("#kittyPic").attr("src", "images/sleeping.gif");
       break;  
   }
