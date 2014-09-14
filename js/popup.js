@@ -193,7 +193,7 @@ var sleepAndWake = function(){
 
 //open up settings window
 var openSettings = function(){
-	window.location.href= "task_list.html";
+	window.location.href= "settings.html";
 };
 
 //===== Adding listeners and running functions define above =====
@@ -220,4 +220,17 @@ $(document).ready(function(){
   $(document).on('click', "#settingsPic", function(){
     openSettings();
   });
+  $(document).on('click', "#block_id", function(){
+    var event_id = event.currentTarget.id;
+  });
+  $(document).on('click', "#study_id", function(){
+    var event_id = event.currentTarget.id;
+  });
+  $(document).on('click', "#submit_id", function(){
+    var event_id = event.currentTarget.id;
+  });
 });
+
+
+
+
