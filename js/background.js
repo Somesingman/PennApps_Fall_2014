@@ -84,7 +84,10 @@ var storeKitten = function(newName, health, mood, mode, powerState){
 	newKitten = 
 }
 */
-var url_array = ["*://*.yahoo.com/*", "*://*.reddit.com/*"];
+var url_array = ["*://*.facebook.com/*", "*://*.reddit.com/*", "*://*.youtube.com/*", 
+"*://*.tumblr.com/*", "*://*.pinterest.com/*", "*://*.buzzfeed.com/*", "*://*.twitch.com/*",
+"*://*.hulu.com/*", "*://*.netflix.com/*", "*://*.twitter.com/*", "*://*.4chan.org/*", 
+"*://*.9gag.org/*", "*://*.xkcd.com/*", "*://espn.go.com/*", "*://*.imgur.com/*", "*://*.leagueoflegends.com/*"];
 var urls = {urls : url_array};
 
 // redirecting code
@@ -103,8 +106,10 @@ chrome.webRequest.onBeforeRequest.addListener(callback, urls, ["blocking"]);
 
 chrome.runtime.onMessage.addListener(
 	function(request, sender, sendResponse){
+	console.log(urls.urls.length);
 		chrome.webRequest.onBeforeRequest.removeListener(callback);
 		chrome.webRequest.onBeforeRequest.addListener(callback, urls, ["blocking"]);
+		alert(urls.urls.length);
 		sendResponse({farewell : "plz"});
 	}
 )

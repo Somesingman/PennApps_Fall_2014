@@ -323,10 +323,16 @@ var addSite = function() {
 	var website_element = $("textarea");
 	var site = String($.trim(website_element.val()));
 	if (site != ""){
-		bg.url_array.push(site);
-		website_element.val('');
-		chrome.runtime.sendMessage({greeting: "Updated URL"}, function(response) {
-  /*alert(response.farewell);*/});
+		var regexp = /(\*|http|https|file|ftp)\:\/\/(\*|(\*\.)[^\*\/]+)\/(.)*/;
+		if(regexp.test(site)){
+			bg.url_array.push(site);
+			website_element.val('');
+			chrome.runtime.sendMessage({greeting: "Updated URL"}, function(response) {
+			alert(response.farewell);});
+		}
+		else{
+			alert("invalid url");
+			}
 		/*chrome.permissions.request({
 			origins: [site]
 		}, function(granted){
