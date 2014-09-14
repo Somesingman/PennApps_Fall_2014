@@ -3,7 +3,7 @@
   <head>
     <title>Getting Started Extension's Popup</title>
     <!-- style sheet-->
-    <link rel="stylesheet" type="text/css" href="css/popup.css">
+    <link rel="stylesheet" type="text/css" href="css/settings.css">
     <!-- js scripts -->
     <script src="js/jquery-1.11.1.min.js"></script>
     <script src="js/popup.js"></script>
@@ -17,13 +17,13 @@
     <!-- block mode -->
     <div>
     <img id="block_id" src="images/hand.png" class="clickable">
-    <p>Block</p> 
+    <p class="inline">Block</p> 
     </div>
    
     <!-- study mode -->
     <div>
     <img id="study_id" src="images/clock.png" class="clickable">
-    <p>Study</p>
+    <p class="inline">Study</p>
     </div>
 
     <!-- Submit Mode -->
@@ -32,5 +32,14 @@
     </div>
     </form>
 
+	<div>
+	<p class="inline">Site: </p><textarea id="website_id" cols="23" rows="1" class="inline"></textarea>
+	<div id="add_id" class="inline websitebtn" type="submit">
+		<img src="images/power_green.png" class="clickable" alt="submit" />
+	</div>
+	<div id="delete_id" class="inline websitebtn" type="submit" style="border: 0; background: transparent">
+		<img src="images/power_red.png" class="clickable" alt="submit" />
+	</div>
+	
   </body>
 </html>

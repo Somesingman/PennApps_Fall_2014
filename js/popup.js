@@ -308,6 +308,25 @@ var openSettings = function(){
 	window.location.href= "settings.html";
 };
 
+
+var addSite = function() {
+	var website_element = $("textarea");
+	var site = String($.trim(website_element.val()));
+	if (site != ""){
+		bg.url_array.push(site);
+		website_element.val('');
+		chrome.runtime.sendMessage({greeting: "Updated URL"}, function(response) {
+  /*alert(response.farewell);*/});
+		/*chrome.permissions.request({
+			origins: [site]
+		}, function(granted){
+			bg.url_array.push(site);
+			website_element.val('');
+			alert($.inArray(site, bg.url_array));
+		});*/
+	}
+}
+
 //===== Adding listeners and running functions define above =====
 $(document).ready(function(){
     addSettings();
@@ -406,6 +425,9 @@ $(document).ready(function(){
     if (event_id){
       go_home();
     }
+  });
+  $(document).on('click', "#add_id", function(){
+	addSite();
   });
 });
 
