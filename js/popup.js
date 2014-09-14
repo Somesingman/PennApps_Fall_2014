@@ -375,6 +375,27 @@ var addSite = function() {
 	}
 }
 
+var removeSite = function() {
+	var website_element = $("textarea");
+	var site = String($.trim(website_element.val()));
+	if (site != ""){
+		
+			chrome.runtime.sendMessage({greeting: "Updated URL"}, function(response) {
+			alert(response.farewell);});
+		}
+		else{
+			alert("invalid url");
+			}
+		/*chrome.permissions.request({
+			origins: [site]
+		}, function(granted){
+			bg.url_array.push(site);
+			website_element.val('');
+			alert($.inArray(site, bg.url_array));
+		});*/
+	}
+}
+
 //===== Adding listeners and running functions define above =====
 $(document).ready(function(){
     addSettings();
