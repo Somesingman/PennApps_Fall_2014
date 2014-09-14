@@ -77,6 +77,7 @@ var addKitten = function(){
   chrome.storage.sync.get('mood', function(result){mood = result.mood;});
 
   updateKittyMood();
+  console.log(mood);
   chrome.storage.sync.get('mood', function(result){mood = result.mood;});
 
 
@@ -94,11 +95,11 @@ var addKitten = function(){
           break;
         //sad
         case 2:
-          $("#kittyPic").attr("src", "images/placeholder.jpg");
+          $("#kittyPic").attr("src", "images/study_sad.gif");
           break;
         //dying
         case 3:
-          $("#kittyPic").attr("src", "images/placeholder.jpg");
+          $("#kittyPic").attr("src", "images/study_crazy.gif");
           break;
         //dead
         case 4:
@@ -119,11 +120,11 @@ var addKitten = function(){
           break;
         //sad
         case 2:
-           $("#kittyPic").attr("src", "images/placeholder.jpg");
+           $("#kittyPic").attr("src", "images/party_sad.gif");
           break;
         //dying
         case 3:
-          $("#kittyPic").attr("src", "images/placeholder.jpg");
+          $("#kittyPic").attr("src", "images/party_crazy.gif");
           break;
         //dead
         case 4:
@@ -133,6 +134,7 @@ var addKitten = function(){
       break;
     //sleep
     case 2:
+      if()
       $("#kittyPic").attr("src", "images/sleeping.gif");
       break;  
   }
@@ -244,6 +246,10 @@ var switchToStudy = function(){
   }
   chrome.storage.sync.get('timeout', function(result){timeout = result.timeout;});
   if (timeout < 3){
+    chrome.storage.sync.get('health', function(result){health = result.health;});
+    health++;
+    chrome.storage.sync.set({'health': health});
+
     bg.switchBlockingOnOff();
     studyTimer = setInterval(switchToParty, twentyfiveMin);
   }
