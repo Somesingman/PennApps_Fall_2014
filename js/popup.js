@@ -42,9 +42,8 @@ chrome.storage.sync.get('timeout', function(result){timeout = result.timeout;});
 
 //===== Functions called upon startup=====
 
-var updateKittyMood = function(){
+var updateKitty = function(){
   chrome.storage.sync.get('health', function(result){health = result.health;});
-
   switch(health){
     case 0:
       mood = 4;
@@ -73,15 +72,9 @@ var updateKittyMood = function(){
 //Have to check if it's blocking, if so use nested switches
 //If not blocking, add a sleeping cat
 var addKitten = function(){
+  updateKitty();
   chrome.storage.sync.get('kitty_mode', function(result){kitty_mode = result.kitty_mode;});
   chrome.storage.sync.get('mood', function(result){mood = result.mood;});
-
-  updateKittyMood();
-  console.log(mood);
-  console.log(health);
-  chrome.storage.sync.get('mood', function(result){mood = result.mood;});
-
-
   switch(kitty_mode){
     //study
     case 0:
@@ -271,6 +264,9 @@ var partyTimer;
 
 var switchToParty = function(){
   clearInterval(studyTimer);
+  kitty_mode = 1;
+  chrome.storage.sync.set({'kitty_mode': kitty_mode});
+  addKitten();
   timeout++;
   chrome.storage.sync.set({'timeout': timeout});
   bg.switchBlockingOnOff();
@@ -283,6 +279,9 @@ var switchToStudy = function(){
   }
   chrome.storage.sync.get('timeout', function(result){timeout = result.timeout;});
   if (timeout < 3){
+    kitty_mode = 0;
+    chrome.storage.sync.set({'kitty_mode': kitty_mode});
+    addKitten();
     chrome.storage.sync.get('health', function(result){health = result.health;});
     health++;
     chrome.storage.sync.set({'health': health});

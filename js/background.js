@@ -96,7 +96,12 @@ var host = "http://www.seas.upenn.edu/~yangyun/block.html";
 var callback = function() {
 	if(isBlocking) {
 		chrome.storage.sync.get('health', function(result){health = result.health;});
-		health--;
+		if(health > 0){
+			health--;
+		}
+		else{
+			health = 0;
+		}
 		chrome.storage.sync.set({'health': health});
 		return {redirectUrl: host};
 	}
