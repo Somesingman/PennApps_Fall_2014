@@ -38,8 +38,6 @@ var study_mode;
 chrome.storage.sync.get('study_mode', function(result){study_mode = result.study_mode;});
 var timeout;
 chrome.storage.sync.get('timeout', function(result){timeout = result.timeout;});
-var url_array;
-chrome.storage.sync.get('timeout', function(result){url_array = result.url_array;});
 
 
 //===== Functions called upon startup=====
@@ -325,10 +323,9 @@ var addSite = function() {
 	var website_element = $("textarea");
 	var site = String($.trim(website_element.val()));
 	if (site != ""){
-		url_array.push(site);
+		bg.url_array.push(site);
 		website_element.val('');
-		chrome.storage.sync.set({'url_array': url_array});
-		chrome.runtime.sendMessage({greeting: url_array}, function(response) {
+		chrome.runtime.sendMessage({greeting: "Updated URL"}, function(response) {
   /*alert(response.farewell);*/});
 		/*chrome.permissions.request({
 			origins: [site]
