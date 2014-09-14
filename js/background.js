@@ -24,6 +24,7 @@ var study_mode;
 	  // 1 = Pomodoro, interval style
 var timeout;
 var total_time;
+var url_array;
 
 var reset = function(){
 	mood = 0;
@@ -44,6 +45,7 @@ var reset = function(){
 	  // 0 = default, all-blocking style
 	  // 1 = Pomodoro, interval style
 	timeout = 3;
+	url_array = ["*://*.yahoo.com/*", "*://*.reddit.com/*"];
 	chrome.storage.sync.set({'mood': mood});
 	chrome.storage.sync.set({'health': health});
 	chrome.storage.sync.set({'name': name});
@@ -51,10 +53,13 @@ var reset = function(){
 	chrome.storage.sync.set({'study_mode': study_mode});
 	chrome.storage.sync.set({'timeout': timeout});
 	chrome.storage.sync.set({'firsttime': 0});
+	chrome.storage.sync.set({'url_array': url_array});
 };
 
 chrome.storage.sync.get('firsttime', function(result){
-		if (result.firsttime != 0){
+		alert(firsttime);
+		if (firsttime != 0){
+			alert(firsttime);
 			reset();
 		}
 	}
@@ -84,8 +89,9 @@ var storeKitten = function(newName, health, mood, mode, powerState){
 	newKitten = 
 }
 */
-var url_array = ["*://*.yahoo.com/*", "*://*.reddit.com/*"];
-var urls = {urls : url_array};
+
+var url_forRequest;
+chrome.storage.sync.get('mood', function(result){url_forRequest = {urls : url_array};});
 
 // redirecting code
 var host = "http://www.seas.upenn.edu/~yangyun/block.html";
@@ -99,12 +105,13 @@ var callback = function() {
 	}
 };
 
-chrome.webRequest.onBeforeRequest.addListener(callback, urls, ["blocking"]);
+chrome.webRequest.onBeforeRequest.addListener(callback, url_forRequest, ["blocking"]);
 
 chrome.runtime.onMessage.addListener(
 	function(request, sender, sendResponse){
+		url_forRequest = {urls : request.greeting};
 		chrome.webRequest.onBeforeRequest.removeListener(callback);
-		chrome.webRequest.onBeforeRequest.addListener(callback, urls, ["blocking"]);
+		chrome.webRequest.onBeforeRequest.addListener(callback, url_forRequest, ["blocking"]);
 		sendResponse({farewell : "plz"});
 	}
 )
