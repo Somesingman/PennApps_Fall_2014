@@ -114,7 +114,6 @@ chrome.runtime.onMessage.addListener(
 	console.log(urls.urls.length);
 		chrome.webRequest.onBeforeRequest.removeListener(callback);
 		chrome.webRequest.onBeforeRequest.addListener(callback, urls, ["blocking"]);
-		alert(urls.urls.length);
 		sendResponse({farewell : "plz"});
 	}
 )
