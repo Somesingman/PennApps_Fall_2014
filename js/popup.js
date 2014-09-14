@@ -55,7 +55,7 @@ chrome.storage.sync.get('mood', function(result){mood = result.mood;});
         //happy
         case 0:
           console.log($("#kittyPic"));
-          $("#kittyPic").attr("src", "images/party_happy.gif");
+          $("#kittyPic")[0].attr("src", "images/party_happy.gif");
           break;
         //meh
         case 1:
