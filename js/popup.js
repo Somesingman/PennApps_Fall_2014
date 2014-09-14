@@ -19,8 +19,8 @@ var kitten = {
       // 1 = kitty on
     study_mode:0,
       // 0 = default, all-blocking style
-      // 1 = Pomodoro, interval style
-    timeout:35,
+      // 1 = Pormodoro, interval style
+    timeout:25,
   }
 */
 
@@ -147,22 +147,31 @@ var hoverOutSetting = function(){
   $("#settingsPic").attr("src", "images/gear.png");
 };
 
-//===== Click functions =====
-//var counter = setInterval(timer,1000);
+//===== Click and Other functions =====
 
+var countdowner;
+var currentTime;
+
+//decrements time by 1 second intervals
 var timer = function(){
+  timeout = timeout - 1000;
+  if (timeout <= 0)
+  {
+    clearInterval(counter);
+  }
 };
 
 var pormodoro = function(){
-  timeout = jQuery.now();
-  chrome.storage.sync.set({'timeout': jQuery.now()});
-  if (kitty_mode == 0){
-    //start blocking
+  currentTime = jQuery.now();
+  countdowner = setInterval(timer,1000);
+
+  //study mode, start blocking
+  if (kitten.kitty_mode == 0){
     bg.switchBlockingOnOff();
   }
+  //party mode, turn off blocking
   else{
-    //turn off blocking
-    //bg.switchBlockingOnOff();
+    bg.switchBlockingOnOff();
   }
 };
 
@@ -176,6 +185,7 @@ var kittyUseBlock = function(){
       allBlock();
     }
     else{
+      kitty_mode = 0;
       pormodoro();
     }
   }
@@ -205,7 +215,7 @@ var sleepAndWake = function(){
 
 //open up settings window
 var openSettings = function(){
-	window.location.href= "task_list.html";
+	window.location.href= "settings.html";
 };
 
 //===== Adding listeners and running functions define above =====
@@ -232,4 +242,17 @@ $(document).ready(function(){
   $(document).on('click', "#settingsPic", function(){
     openSettings();
   });
+  $(document).on('click', "#block_id", function(){
+    var event_id = event.currentTarget.id;
+  });
+  $(document).on('click', "#study_id", function(){
+    var event_id = event.currentTarget.id;
+  });
+  $(document).on('click', "#submit_id", function(){
+    var event_id = event.currentTarget.id;
+  });
 });
+
+
+
+
