@@ -213,6 +213,11 @@ var sleepAndWake = function(){
   }
 };
 
+//go back to home page
+var go_home = function(){
+  window.location.href = "popup.html"
+};
+
 //open up settings window
 var openSettings = function(){
 	window.location.href= "settings.html";
@@ -265,23 +270,30 @@ $(document).ready(function(){
   Settings button : Productivity Modes functionality
   *******************/
  
-  //Activate blocking mode
+  //Activate blocking mode - Works! 
   $("#block_id").on('click', function(event){
-    var event_id = event.currentTarget.id;
-    console.log("block_id clicked");
+    study_mode = 1;
+    chrome.storage.sync.set({'study_mode': study_mode});
+    console.log(' in block id ');
+    console.log(bg.isBlocking);
 
+    if (bg.isBlocking == 0){
+      console.log('if statement is running')
+      bg.switchBlockingOnOff();
+    };
   });
 
   //Activate study mode
   $("#study_id").on('click',function(event){
     var event_id = event.currentTarget.id;
-    console.log('study_id clicked');
   });
 
-  //Confirm final study mode by clicking submit
-  $("#submit_id").on('click',function(event){
+  //Confirm final study mode by clicking submit - Works!
+  $("#back_id").on('click',function(event){
     var event_id = event.currentTarget.id;
-    console.log('submit_id clicked');
+    if (event_id){
+      go_home(); //redirects to home page
+    };
   });
  
 

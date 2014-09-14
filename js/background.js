@@ -69,12 +69,14 @@ var switchBlockingOnOff = function (){
 		//alert("was blocking");
 		isBlocking = false;
 		chrome.browserAction.setIcon({path: 'images/icon_off.png'});
+		console.log("blocking off");
 		//alert("now not blocking");
 	}
 	else{
 		//alert("was not blocking");
 		isBlocking = true;
 		chrome.browserAction.setIcon({path: 'images/icon_on.png'});
+		console.log("blocking on")
 		//alert("now blocking");
 	}
 };
