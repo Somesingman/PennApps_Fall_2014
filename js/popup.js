@@ -38,67 +38,109 @@ var study_mode;
 chrome.storage.sync.get('study_mode', function(result){study_mode = result.study_mode;});
 var timeout;
 chrome.storage.sync.get('timeout', function(result){timeout = result.timeout;});
-var total_time;
-chrome.storage.sync.get('total_time', function(result){total_time = result.total_time;});
 
 
 //===== Functions called upon startup=====
+
+var updateKittyMood = function(){
+  chrome.storage.sync.get('health', function(result){health = result.health;});
+
+  switch(health){
+    case 0:
+      mood = 4;
+      chrome.storage.sync.set({'mood': mood});
+      break;
+    case 1:
+      mood = 3;
+      chrome.storage.sync.set({'mood': mood});
+      break;
+    case 2:
+      mood = 2;
+      chrome.storage.sync.set({'mood': mood});
+      break;
+    case 3:
+      mood = 1;
+      chrome.storage.sync.set({'mood': mood});
+      break;
+    case 4:
+      mood = 0;
+      chrome.storage.sync.set({'mood': mood});
+      break;
+  }
+};
 
 //Add kitty based on the state at opening of extension
 //Have to check if it's blocking, if so use nested switches
 //If not blocking, add a sleeping cat
 var addKitten = function(){
-  // will probably have to nest switch statements
-  switch(mood){
-    //happy
+  chrome.storage.sync.get('kitty_mode', function(result){kitty_mode = result.kitty_mode;});
+  chrome.storage.sync.get('mood', function(result){mood = result.mood;});
+
+  updateKittyMood();
+  chrome.storage.sync.get('mood', function(result){mood = result.mood;});
+
+
+  switch(kitty_mode){
+    //study
     case 0:
-      switch(kitty_mode){
+      switch(mood){
+        //happy
         case 0:
+          $("#kittyPic").attr("src", "images/study_happy.gif");
+          break;
+        //meh
+        case 1:
+          $("#kittyPic").attr("src", "images/study_meh.gif");
+          break;
+        //sad
+        case 2:
           $("#kittyPic").attr("src", "images/placeholder.jpg");
           break;
-        case 1:
+        //dying
+        case 3:
           $("#kittyPic").attr("src", "images/placeholder.jpg");
+          break;
+        //dead
+        case 4:
+          $("#kittyPic").attr("src", "images/dead.gif");
           break;
       }
-    //neutral
+      break;
+    //party
     case 1:
-      switch(kitty_mode){
+      switch(mood){
+        //happy
         case 0:
+          $("#kittyPic").attr("src", "images/party_happy.gif");
+          break;
+        //meh
+        case 1:
+          $("#kittyPic").attr("src", "images/party_meh.gif");
+          break;
+        //sad
+        case 2:
+           $("#kittyPic").attr("src", "images/placeholder.jpg");
+          break;
+        //dying
+        case 3:
           $("#kittyPic").attr("src", "images/placeholder.jpg");
           break;
-        case 1:
-          $("#kittyPic").attr("src", "images/placeholder.jpg");
+        //dead
+        case 4:
+          $("#kittyPic").attr("src", "images/dead.gif");
           break;
       }
-    //disappointed
+      break;
+    //sleep
     case 2:
-      switch(kitty_mode){
-        case 0:
-          $("#kittyPic").attr("src", "images/placeholder.jpg");
-          break;
-        case 1:
-          $("#kittyPic").attr("src", "images/placeholder.jpg");
-          break;
-      }
-    //sadz
-    case 3:
-      switch(kitty_mode){
-        case 0:
-          $("#kittyPic").attr("src", "images/placeholder.jpg");
-          break;
-        case 1:
-          $("#kittyPic").attr("src", "images/placeholder.jpg");
-          break;
-      }
-    //dedz
-    case 4:
-      $("#kittyPic").attr("src", "images/placeholder.jpg");
+      $("#kittyPic").attr("src", "images/sleeping.gif");
+      break;  
   }
 };
 
 //Add state of power button at opening of extension
 var addPowerButton = function(){
-  if (powerState==0){
+  if (powerState == 0){
     $("#powerPic").attr("src", "images/power_gray.png");
   }
   else{
@@ -112,9 +154,13 @@ var addMode = function(){
     $("#modePic").attr("src", "images/hand.png");
   }
   else{
-    $("#modePic").attr("src", "");
+    $("#modePic").attr("src", "images/clock.png");
   }
 };
+
+var addSettings = function(){
+  $("#settingsPic").attr("src", "images/gear.png");
+}
 
 //===== Functions that make buttons responsive =====
 
@@ -149,30 +195,35 @@ var hoverOutSetting = function(){
 
 //===== Click and Other functions =====
 
-var countdowner;
-var currentTime;
+var twentyfiveMin = 1000*10//60 * 1000 * 25;
+var fiveMin = 1000*15//60 * 1000 * 5;
+var studyTimer;
+var partyTimer;
 
-//decrements time by 1 second intervals
-var timer = function(){
-  timeout = timeout - 1000;
-  if (timeout <= 0)
-  {
-    clearInterval(counter);
+var switchToParty = function(){
+  clearInterval(studyTimer);
+  timeout++;
+  chrome.storage.sync.set({'timeout': timeout});
+  bg.switchBlockingOnOff();
+  partyTimer = setInterval(switchToStudy, fiveMin);
+};
+
+var switchToStudy = function(){
+  if (switchToParty != null){
+    clearInterval(partyTimer);
+  }
+  chrome.storage.sync.get('timeout', function(result){timeout = result.timeout;});
+  if (timeout < 3){
+    bg.switchBlockingOnOff();
+    studyTimer = setInterval(switchToParty, twentyfiveMin);
   }
 };
 
 var pormodoro = function(){
-  currentTime = jQuery.now();
-  countdowner = setInterval(timer,1000);
-
-  //study mode, start blocking
-  if (kitten.kitty_mode == 0){
-    bg.switchBlockingOnOff();
-  }
-  //party mode, turn off blocking
-  else{
-    bg.switchBlockingOnOff();
-  }
+  bg.switchBlockingOnOff();
+  timeout = 0;
+  chrome.storage.sync.set({'timeout': timeout});
+  studyTimer = setInterval(switchToParty, twentyfiveMin);
 };
 
 var allBlock = function(){
@@ -196,9 +247,11 @@ var sleepAndWake = function(){
   // if kitty is on, turn off
   if (powerState == 1){
     $("#powerPic").attr("src", "images/power_gray.png");
-    $('#kittyPic').attr("src", "");
+    kitty_mode = 2;
+    chrome.storage.sync.set({'kitty_mode': kitty_mode});
+    addKitten();
     powerState = 0;
-	chrome.storage.sync.set({'powerState': powerState});
+	  chrome.storage.sync.set({'powerState': powerState});
     if (bg.isBlocking == true){
       bg.switchBlockingOnOff();
     }
@@ -206,11 +259,18 @@ var sleepAndWake = function(){
   // else if kitty is off, turn on
   else{
     $("#powerPic").attr("src", "images/power_green.png");
-    $('#kittyPic').attr("src", "images/kitten-gray.jpg");
+    kitty_mode = 0;
+    chrome.storage.sync.set({'kitty_mode': kitty_mode});
+    addKitten();
     powerState = 1;
-	chrome.storage.sync.set({'powerState': powerState});
+	  chrome.storage.sync.set({'powerState': powerState});
     kittyUseBlock();
   }
+};
+
+//go bak to the home page
+var go_home = function(){
+  window.location.href="popup.html";
 };
 
 //open up settings window
@@ -239,36 +299,70 @@ var addSite = function() {
 
 //===== Adding listeners and running functions define above =====
 $(document).ready(function(){
-  addKitten();
-  addPowerButton();
-  addMode();
+    addSettings();
+    setTimeout(function(){
+      addMode();
+      addKitten();
+      addPowerButton();
+    }, 200);
 
-  $(document).on('mouseover', "#powerPic", function(){
+
+
+   /*******************
+  powerPic functionality
+  *******************/
+  $("#powerPic").on('mouseover', function(){
     hoverPower();
   });
-  $(document).on('mouseleave', "#powerPic", function(){
+
+  $("#powerPic").on('mouseleave', function(){
     hoverOutPower();
   });
-  $(document).on('click', "#powerPic", function(){
+
+  $("#powerPic").on('click', function(){
     sleepAndWake();
   });
-  $(document).on('mouseover', "#settingsPic", function(){
+
+  /*******************
+  settingsPic functionality
+  *******************/
+
+
+  $("#settingsPic").on('mouseover', function(){
     hoverSetting();
   });
-  $(document).on('mouseleave', "#settingsPic", function(){
+ 
+  $("#settingsPic").on('mouseleave', function(){
     hoverOutSetting();
   });
-  $(document).on('click', "#settingsPic", function(){
+
+  $('#settingsPic').on('click', function(){
     openSettings();
   });
-  $(document).on('click', "#block_id", function(){
-    var event_id = event.currentTarget.id;
+  
+
+  /*****************
+  Settings button : Productivity Modes functionality
+  *******************/
+ 
+  //Activate blocking mode
+  $("#block_id").on('click', function(event){
+    study_mode = 0;
+    chrome.storage.sync.set({'study_mode': study_mode});
   });
-  $(document).on('click', "#study_id", function(){
-    var event_id = event.currentTarget.id;
+
+  //Activate study mode
+  $("#study_id").on('click',function(event){
+    study_mode = 1;
+    chrome.storage.sync.set({'study_mode': study_mode});
   });
-  $(document).on('click', "#submit_id", function(){
+
+  //Confirm final study mode by clicking submit
+  $("#back_id").on('click',function(event){
     var event_id = event.currentTarget.id;
+    if (event_id){
+      go_home();
+    }
   });
   $(document).on('click', "#add_id", function(){
 	addSite();
