@@ -2,14 +2,59 @@ body {
   width: 300px;
   height: 300px;
   overflow-x: hidden;
+  font-family: "Helvetica", sans-serif;
 }
 
-.clickable {
+textarea {
+  margin-top: 15px;
+  margin-right: 15px;
+  width: 130px;
+}
+
+.clickable, #back_id {
   width: 30px;
   height: 30px;
   display: inline;
 }
 
+.clickable {
+  margin-right: 10px;
+}
+
 .inline {
 	display: inline;
+  padding-bottom: 10px;
+}
+
+.block_div {
+  margin-bottom: 10px;
+}
+
+.linedup{
+  display: inline-block;
+  margin-right: 10px;
+}
+
+#main {
+	text-align: center;
+}
+
+#add_id, #delete_id {
+  height:30px;
+  width:30px;
+  display: block;
+  padding: 0px;
+  background: url('plus.png');
+}
+
+#add_id:hover {
+  background: url('plus_dark.png');
+}
+
+#delete_id {
+  background: url('minus.png');
+}
+
+#delete_id:hover {
+  background: url('minus_dark.png');
 }

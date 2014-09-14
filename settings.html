@@ -11,34 +11,37 @@
   </head>
   <body>
     <form name = "mode_form" method="Post">
+    <!-- Submit Mode -->
+    <div>
+    <img id="back_id" src="images/arrow_light.png">
+    </div>
+    <br>
+
     <div id="main">
     Choose Study Mode <br> <br>
    
     <!-- block mode -->
-    <div>
+    <div class="block_div">
     <img id="block_id" src="images/hand.png" class="clickable">
     <p class="inline">Block</p> 
     </div>
    
     <!-- study mode -->
-    <div>
+    <div class="block_div">
     <img id="study_id" src="images/clock.png" class="clickable">
     <p class="inline">Study</p>
     </div>
 
-    <!-- Submit Mode -->
-    <div>
-    <img id="back_id" src="images/arrow.png" class="clickable">
-    </div>
     </form>
 
 	<div>
 	<p class="inline">Site: </p><textarea id="website_id" cols="23" rows="1" class="inline"></textarea>
-	<div id="add_id" class="inline websitebtn" type="submit">
-		<img src="images/power_green.png" class="clickable" alt="submit" />
-	</div>
-	<div id="delete_id" class="inline websitebtn" type="submit" style="border: 0; background: transparent">
-		<img src="images/power_red.png" class="clickable" alt="submit" />
+    <div class="linedup">
+    	<div id="add_id" class="inline websitebtn" type="submit">
+    	</div>
+    </div>
+    <div class="linedup"> 
+        <div id="delete_id" class="inline websitebtn" type="submit">
 	</div>
 	
   </body>
