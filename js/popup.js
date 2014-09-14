@@ -25,7 +25,7 @@ var kitten = {
 */
 
 var mood;
-chrome.storage.sync.get('mood', function(result){mood = result.mood; console.log(mood);});
+chrome.storage.sync.get('mood', function(result){mood = result.mood;});
 var health;
 chrome.storage.sync.get('health', function(result){health = result.health;});
 var name;
@@ -44,9 +44,6 @@ chrome.storage.sync.get('timeout', function(result){timeout = result.timeout;});
 
 var updateKittyMood = function(){
   chrome.storage.sync.get('health', function(result){health = result.health;});
-  
-  console.log(mood);
-  console.log(health);
 
   switch(health){
     case 0:
@@ -219,10 +216,6 @@ var switchToStudy = function(){
   if (timeout < 3){
     bg.switchBlockingOnOff();
     studyTimer = setInterval(switchToParty, twentyfiveMin);
-    console.log(timeout);
-  }
-  else{
-    console.log("exit")
   }
 };
 
@@ -253,7 +246,6 @@ var kittyUseBlock = function(){
 var sleepAndWake = function(){
   // if kitty is on, turn off
   if (powerState == 1){
-    console.log("off");
     $("#powerPic").attr("src", "images/power_gray.png");
     kitty_mode = 2;
     chrome.storage.sync.set({'kitty_mode': kitty_mode});
@@ -266,7 +258,6 @@ var sleepAndWake = function(){
   }
   // else if kitty is off, turn on
   else{
-    console.log("on");
     $("#powerPic").attr("src", "images/power_green.png");
     kitty_mode = 0;
     chrome.storage.sync.set({'kitty_mode': kitty_mode});
@@ -277,11 +268,6 @@ var sleepAndWake = function(){
   }
 };
 
-var turnOff = function(){
-    $("#powerPic").attr("src", "images/power_gray.png");
-    $('#kittyPic').attr("src", "kitten-gray.jpg");
-};
-
 //go bak to the home page
 var go_home = function(){
   window.location.href="popup.html";
@@ -289,7 +275,6 @@ var go_home = function(){
 
 //open up settings window
 var openSettings = function(){
-  turnOff();
 	window.location.href= "settings.html";
 };
 
@@ -345,19 +330,16 @@ $(document).ready(function(){
   $("#block_id").on('click', function(event){
     study_mode = 0;
     chrome.storage.sync.set({'study_mode': study_mode});
-    console.log("block")
   });
 
   //Activate study mode
   $("#study_id").on('click',function(event){
     study_mode = 1;
     chrome.storage.sync.set({'study_mode': study_mode});
-    console.log("study");
   });
 
   //Confirm final study mode by clicking submit
   $("#back_id").on('click',function(event){
-    console.log("back");
     var event_id = event.currentTarget.id;
     if (event_id){
       go_home();
