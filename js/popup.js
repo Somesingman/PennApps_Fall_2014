@@ -78,6 +78,7 @@ var addKitten = function(){
 
   updateKittyMood();
   console.log(mood);
+  console.log(health);
   chrome.storage.sync.get('mood', function(result){mood = result.mood;});
 
 

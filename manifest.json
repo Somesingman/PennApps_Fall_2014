@@ -1,9 +1,9 @@
 {
   "manifest_version": 2,
 
-  "name": "Study Buddy Kitty",
-  "description": "This extension demonstrates a browser action with kittens.",
-  "version": "1.0",
+  "name": "Study Buddy",
+  "description": "Productivity extension.  Stay focused or the cat dies!",
+  "version": "0.1",
   "background": {"scripts":["js/background.js"]},
   "permissions": [
 	"webRequest",
