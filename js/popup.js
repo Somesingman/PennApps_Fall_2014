@@ -38,8 +38,6 @@ var study_mode;
 chrome.storage.sync.get('study_mode', function(result){study_mode = result.study_mode;});
 var timeout;
 chrome.storage.sync.get('timeout', function(result){timeout = result.timeout;});
-var total_time;
-chrome.storage.sync.get('total_time', function(result){total_time = result.total_time;});
 
 
 //===== Functions called upon startup=====
@@ -149,30 +147,34 @@ var hoverOutSetting = function(){
 
 //===== Click and Other functions =====
 
-var countdowner;
-var currentTime;
+var twentyfiveMin = 60 * 1000 * 25;
+var fiveMin = 60 * 1000 * 5;
+var studyTimer;
+var partyTimer;
 
-//decrements time by 1 second intervals
-var timer = function(){
-  timeout = timeout - 1000;
-  if (timeout <= 0)
-  {
-    clearInterval(counter);
+var switchToParty = function(){
+  timeout++;
+  chrome.storage.sync.set({'timeout': timeout});
+  bg.switchBlockingOnOff();
+  if (studyTimer != null){
+    clearInterval(partyTimer);
+  }
+  studyTimer = setInterval(switchToStudy, twentyfiveMin);
+};
+
+var switchToStudy = function(){
+  chrome.storage.sync.get('timeout', function(result){timeout = result.timeout;});
+  if (timeout <= 3){
+    bg.switchBlockingOnOff();
+    if (partyTimer != null){
+      clearInterval(studyTimer);
+    }
+    partyTimer = setInterval(switchToParty, fiveMin);
   }
 };
 
 var pormodoro = function(){
-  currentTime = jQuery.now();
-  countdowner = setInterval(timer,1000);
-
-  //study mode, start blocking
-  if (kitten.kitty_mode == 0){
-    bg.switchBlockingOnOff();
-  }
-  //party mode, turn off blocking
-  else{
-    bg.switchBlockingOnOff();
-  }
+  studyTimer();
 };
 
 var allBlock = function(){
@@ -198,7 +200,7 @@ var sleepAndWake = function(){
     $("#powerPic").attr("src", "images/power_gray.png");
     $('#kittyPic').attr("src", "");
     powerState = 0;
-	chrome.storage.sync.set({'powerState': powerState});
+	  chrome.storage.sync.set({'powerState': powerState});
     if (bg.isBlocking == true){
       bg.switchBlockingOnOff();
     }
@@ -208,7 +210,7 @@ var sleepAndWake = function(){
     $("#powerPic").attr("src", "images/power_green.png");
     $('#kittyPic').attr("src", "images/kitten-gray.jpg");
     powerState = 1;
-	chrome.storage.sync.set({'powerState': powerState});
+	  chrome.storage.sync.set({'powerState': powerState});
     kittyUseBlock();
   }
 };
@@ -224,32 +226,60 @@ $(document).ready(function(){
   addPowerButton();
   addMode();
 
-  $(document).on('mouseover', "#powerPic", function(){
+   /*******************
+  powerPic functionality
+  *******************/
+  $("#powerPic").on('mouseover', function(){
     hoverPower();
   });
-  $(document).on('mouseleave', "#powerPic", function(){
+
+  $("#powerPic").on('mouseleave', function(){
     hoverOutPower();
   });
-  $(document).on('click', "#powerPic", function(){
+
+  $("#powerPic").on('click', function(){
     sleepAndWake();
   });
-  $(document).on('mouseover', "#settingsPic", function(){
+
+  /*******************
+  settingsPic functionality
+  *******************/
+
+
+  $("#settingsPic").on('mouseover', function(){
     hoverSetting();
   });
-  $(document).on('mouseleave', "#settingsPic", function(){
+ 
+  $("#settingsPic").on('mouseleave', function(){
     hoverOutSetting();
   });
-  $(document).on('click', "#settingsPic", function(){
+
+  $('#settingsPic').on('click', function(){
     openSettings();
   });
-  $(document).on('click', "#block_id", function(){
+  
+
+  /*****************
+  Settings button : Productivity Modes functionality
+  *******************/
+ 
+  //Activate blocking mode
+  $("#block_id").on('click', function(event){
     var event_id = event.currentTarget.id;
+    console.log("block_id clicked");
+
   });
-  $(document).on('click', "#study_id", function(){
+
+  //Activate study mode
+  $("#study_id").on('click',function(event){
     var event_id = event.currentTarget.id;
+    console.log('study_id clicked');
   });
-  $(document).on('click', "#submit_id", function(){
+
+  //Confirm final study mode by clicking submit
+  $("#submit_id").on('click',function(event){
     var event_id = event.currentTarget.id;
+    console.log('submit_id clicked');
   });
 });
 
