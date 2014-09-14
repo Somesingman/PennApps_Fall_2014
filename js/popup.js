@@ -214,12 +214,12 @@ Hover functions
 
 //Show hover image of settings button
 var hoverSetting = function(){
-  $("#settingsPic").attr("src", "images/gear.png");
+  $("#settingsPic").attr("src", "images/gear_dark.png");
 };
 
 //Revert back to original image of settings button
 var hoverOutSetting = function(){
-  $("#settingsPic").attr("src", "images/gear_dark.png");
+  $("#settingsPic").attr("src", "images/gear.png");
 };
 
 var hoverBlock_id = function(){
