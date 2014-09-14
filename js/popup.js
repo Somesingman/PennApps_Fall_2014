@@ -54,8 +54,8 @@ chrome.storage.sync.get('mood', function(result){mood = result.mood;});
       switch(mood){
         //happy
         case 0:
-          console.log($("#kittyPic"));
-          $("#kittyPic")[0].attr("src", "images/party_happy.gif");
+        console.log("hi 1");
+          $("#kittyPic").attr("src", "images/party_happy.gif");
           break;
         //meh
         case 1:
@@ -74,6 +74,7 @@ chrome.storage.sync.get('mood', function(result){mood = result.mood;});
           $("#kittyPic").attr("src", "images/dead.gif");
           break;
       }
+      break;
     //party
     case 1:
       switch(mood){
@@ -98,8 +99,10 @@ chrome.storage.sync.get('mood', function(result){mood = result.mood;});
           $("#kittyPic").attr("src", "images/dead.gif");
           break;
       }
+      break;
     //sleep
     case 2:
+    console.log("hi2");
       $("#kittyPic").attr("src", "images/sleeping.gif");
       break;  
   }
@@ -221,9 +224,7 @@ var sleepAndWake = function(){
     $("#powerPic").attr("src", "images/power_gray.png");
     kitty_mode = 2;
     chrome.storage.sync.set({'kitty_mode': kitty_mode});
-    setTimeout(function(){
-      addKitten();
-    }, 200);
+    addKitten();
     powerState = 0;
 	  chrome.storage.sync.set({'powerState': powerState});
     if (bg.isBlocking == true){
@@ -236,9 +237,7 @@ var sleepAndWake = function(){
     $("#powerPic").attr("src", "images/power_green.png");
     kitty_mode = 0;
     chrome.storage.sync.set({'kitty_mode': kitty_mode});
-    setTimeout(function(){
-      addKitten();
-    }, 200);
+    addKitten();
     powerState = 1;
 	  chrome.storage.sync.set({'powerState': powerState});
     kittyUseBlock();
