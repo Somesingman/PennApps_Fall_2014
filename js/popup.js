@@ -134,8 +134,12 @@ var addKitten = function(){
       break;
     //sleep
     case 2:
-      if()
-      $("#kittyPic").attr("src", "images/sleeping.gif");
+      if(mood < 4){
+        $("#kittyPic").attr("src", "images/sleeping.gif");
+      }
+      else{
+        $("#kittyPic").attr("src", "images/dead.gif");
+      }
       break;  
   }
 };
