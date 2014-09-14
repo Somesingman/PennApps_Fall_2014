@@ -152,28 +152,35 @@ var studyTimer;
 var partyTimer;
 
 var switchToParty = function(){
+  clearInterval(studyTimer);
+  console.log("hi");
   timeout++;
   chrome.storage.sync.set({'timeout': timeout});
   bg.switchBlockingOnOff();
-  if (studyTimer != null){
-    clearInterval(partyTimer);
-  }
-  studyTimer = setInterval(switchToStudy, twentyfiveMin);
+  partyTimer = setInterval(switchToStudy, fiveMin);
 };
 
 var switchToStudy = function(){
+  if (switchToParty != null){
+    clearInterval(partyTimer);
+  }
+  console.log("bye");
   chrome.storage.sync.get('timeout', function(result){timeout = result.timeout;});
-  if (timeout <= 3){
+  if (timeout < 3){
     bg.switchBlockingOnOff();
-    if (partyTimer != null){
-      clearInterval(studyTimer);
-    }
-    partyTimer = setInterval(switchToParty, fiveMin);
+    studyTimer = setInterval(switchToParty, twentyfiveMin);
+    console.log(timeout);
+  }
+  else{
+    console.log("exit")
   }
 };
 
 var pormodoro = function(){
-  studyTimer();
+  bg.switchBlockingOnOff();
+  timeout = 0;
+  chrome.storage.sync.set({'timeout': timeout});
+  studyTimer = setInterval(switchToParty, twentyfiveMin);
 };
 
 var allBlock = function(){
