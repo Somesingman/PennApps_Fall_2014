@@ -1,34 +1,33 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
   <head>
-    <title>Getting Started Extension's Popup</title>
-    <link rel="stylesheet" type="text/css" href="popup.css">
+    <title>STUDY BUDDY KITTY</title>
+    <link rel="stylesheet" type="text/css" href="css/popup.css">
     <!--
       - JavaScript and HTML must be in separate files: see our Content Security
       - Policy documentation[1] for details and explanation.
       -
       - [1]: http://developer.chrome.com/extensions/contentSecurityPolicy.html
      -->
-    <script src="jquery-1.11.1.min.js"></script>
-    <script src="background.js"></script>
-    <script src="popup.js"></script>
+    <script src="js/jquery-1.11.1.min.js"></script>
+    <script src="js/popup.js"></script>
   </head>
   <body>
     <div id="main">
       <div title="Active" id="powerbtn">
-        <img id="powerPic" src="power_green.png" class="clickable">
+        <img id="powerPic" class="clickable" id="gear">
       </div>
       <div id="rightbtns">
         <div title="Settings" id="settingsbtn">
-          <img id="settingsPic"src="gear.png" class="clickable">
+          <img id="settingsPic" class="clickable" >
         </div>
         <div id="modeTitle" title="Block All Mode" id="modebtn">
-          <img id="modePic"src="hand.png" class="clickable">
+          <img id="modePic"src="" class="clickable">
         </div>
       </div>
       <div class="clear"></div>
       <div id="kitty">
-        <img id="kittyPic" src="dead.gif">
+        <img id="kittyPic">
       </div>
     </div>
   </body>
