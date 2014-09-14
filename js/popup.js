@@ -331,6 +331,10 @@ var addSite = function() {
 $(document).ready(function(){
     addSettings();
     setTimeout(function(){
+      if (powerState == 0){
+        kitty_mode = 2;
+        chrome.storage.sync.set({'kitty_mode': kitty_mode});
+      }
       addMode();
       addKitten();
       addPowerButton();
