@@ -166,7 +166,25 @@ var addMode = function(){
 
 var addSettings = function(){
   $("#settingsPic").attr("src", "images/gear.png");
-}
+};
+
+var addHand = function(){
+  if(study_mode == 0){
+    $("#block_id").attr("src", "images/hand.png");
+  }
+  else{
+    $("#block_id").attr("src", "images/hand_light.png");
+  }
+};
+
+var addClock = function(){
+  if(study_mode == 1){
+    $("#study_id").attr("src", "images/clock.png");
+  }
+  else{
+    $("#study_id").attr("src", "images/clock_light.png");
+  }
+};
 
 //===== Functions that make buttons responsive =====
 
@@ -196,36 +214,50 @@ Hover functions
 
 //Show hover image of settings button
 var hoverSetting = function(){
-  $("#settingsPic").attr("src", "images/gear_dark.png");
+  $("#settingsPic").attr("src", "images/gear.png");
 };
 
 //Revert back to original image of settings button
 var hoverOutSetting = function(){
-  $("#settingsPic").attr("src", "images/gear.png");
+  $("#settingsPic").attr("src", "images/gear_dark.png");
 };
 
 var hoverBlock_id = function(){
-  $("#block_id").attr("src", "images/hand_light.png");
+  if(study_mode != 0){
+    $("#block_id").attr("src", "images/hand.png");
+  }
 };
 
 var hoverOutBlock_id = function(){
-  $("#block_id").attr("src", "images/hand.png");
+  if(study_mode != 0){
+    $("#block_id").attr("src", "images/hand_light.png");
+  }
+};
+
+var hoverClickBlock_id = function(){
+  if(study_mode != 0){
+    $("#block_id").attr("src", "images/hand_light.png");
+  }
 };
 
 var hoverStudy_id = function(){
-  $("#study_id").attr("src", "images/clock_light.png");
+  if(study_mode != 1){
+    $("#study_id").attr("src", "images/clock.png");
+  }
 };
 
 var hoverOutStudy_id = function(){
-  $("#study_id").attr("src", "images/clock.png");
+  if(study_mode != 1){
+    $("#study_id").attr("src", "images/clock_light.png");
+  }
 };
 
 var hoverBack_id = function(){
-  $("#back_id").attr("src", "images/arrow_light.png");
+  $("#back_id").attr("src", "images/arrow.png");
 };
 
 var hoverOutBack_id = function(){
-  $("#back_id").attr("src", "images/arrow.png");
+  $("#back_id").attr("src", "images/arrow_light.png");
 };
 
 
@@ -323,10 +355,16 @@ var addSite = function() {
 	var website_element = $("textarea");
 	var site = String($.trim(website_element.val()));
 	if (site != ""){
-		bg.url_array.push(site);
-		website_element.val('');
-		chrome.runtime.sendMessage({greeting: "Updated URL"}, function(response) {
-  /*alert(response.farewell);*/});
+		var regexp = /(\*|http|https|file|ftp)\:\/\/(\*|(\*\.)[^\*\/]+)\/(.)*/;
+		if(regexp.test(site)){
+			bg.url_array.push(site);
+			website_element.val('');
+			chrome.runtime.sendMessage({greeting: "Updated URL"}, function(response) {
+			alert(response.farewell);});
+		}
+		else{
+			alert("invalid url");
+			}
 		/*chrome.permissions.request({
 			origins: [site]
 		}, function(granted){
@@ -348,6 +386,8 @@ $(document).ready(function(){
       addMode();
       addKitten();
       addPowerButton();
+      addClock();
+      addHand();
     }, 200);
 
 
@@ -391,30 +431,26 @@ $(document).ready(function(){
   
   // 1) block_id  - Works! (all 3 functions)
   $("#block_id").on('mouseover', function(){
-    console.log('hover block_id')
     hoverBlock_id();
   });
  
   $("#block_id").on('mouseleave', function(){
-    console.log('hoverout block_id')
     hoverOutBlock_id();
   });
 
    $("#block_id").on('click', function(event){
     // add image to indicate button has been clicked
-    console.log("click block_id")
     study_mode = 0;
     chrome.storage.sync.set({'study_mode': study_mode});
+    $("#study_id").attr("src", "images/clock_light.png");
   });
 
   // 2) study_id  Works! (all 3 functions)
   $("#study_id").on('mouseover', function(){
-    console.log("hover study_id")
     hoverStudy_id();
   });
  
   $("#study_id").on('mouseleave', function(){
-    console.log("hoverout study_id")
     hoverOutStudy_id();
   });
 
@@ -422,7 +458,7 @@ $(document).ready(function(){
     // add image to indicate button has been clciked 
     study_mode = 1;
     chrome.storage.sync.set({'study_mode': study_mode});
-    console.log("click study_id")
+    $("#block_id").attr("src", "images/hand_light.png");
   });
 
   // 3) back_id (Works! - all 3 functions)
