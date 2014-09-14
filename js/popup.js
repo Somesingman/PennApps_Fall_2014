@@ -1,5 +1,6 @@
 var bg = chrome.extension.getBackgroundPage();
 
+/*
 var kitten = {
   mood:0,
       // 0 = happy
@@ -21,6 +22,24 @@ var kitten = {
       // 1 = Pomodoro, interval style
     timeout:35,
   }
+*/
+
+var mood;
+chrome.storage.sync.get('mood', function(result){mood = result.mood; console.log(mood);});
+var health;
+chrome.storage.sync.get('health', function(result){health = result.health;});
+var name;
+chrome.storage.sync.get('name', function(result){name = result.name;});
+var kitty_mode;
+chrome.storage.sync.get('kitty_mode', function(result){kitty_mode = result.kitty_mode;});
+var powerState;
+chrome.storage.sync.get('powerState', function(result){powerState = result.powerState;});
+var study_mode;
+chrome.storage.sync.get('study_mode', function(result){study_mode = result.study_mode;});
+var timeout;
+chrome.storage.sync.get('timeout', function(result){timeout = result.timeout;});
+var total_time;
+chrome.storage.sync.get('total_time', function(result){total_time = result.total_time;});
 
 
 //===== Functions called upon startup=====
@@ -30,10 +49,10 @@ var kitten = {
 //If not blocking, add a sleeping cat
 var addKitten = function(){
   // will probably have to nest switch statements
-  switch(kitten.mood){
+  switch(mood){
     //happy
     case 0:
-      switch(kitten.kitty_mode){
+      switch(kitty_mode){
         case 0:
           $("#kittyPic").attr("src", "images/placeholder.jpg");
           break;
@@ -43,7 +62,7 @@ var addKitten = function(){
       }
     //neutral
     case 1:
-      switch(kitten.kitty_mode){
+      switch(kitty_mode){
         case 0:
           $("#kittyPic").attr("src", "images/placeholder.jpg");
           break;
@@ -53,7 +72,7 @@ var addKitten = function(){
       }
     //disappointed
     case 2:
-      switch(kitten.kitty_mode){
+      switch(kitty_mode){
         case 0:
           $("#kittyPic").attr("src", "images/placeholder.jpg");
           break;
@@ -63,7 +82,7 @@ var addKitten = function(){
       }
     //sadz
     case 3:
-      switch(kitten.kitty_mode){
+      switch(kitty_mode){
         case 0:
           $("#kittyPic").attr("src", "images/placeholder.jpg");
           break;
@@ -79,7 +98,7 @@ var addKitten = function(){
 
 //Add state of power button at opening of extension
 var addPowerButton = function(){
-  if (kitten.powerState==0){
+  if (powerState==0){
     $("#powerPic").attr("src", "images/power_gray.png");
   }
   else{
@@ -89,7 +108,7 @@ var addPowerButton = function(){
 
 //Add state of mode image at oepning of extension
 var addMode = function(){
-  if (kitten.mode == 0){
+  if (study_mode == 0){
     $("#modePic").attr("src", "images/hand.png");
   }
   else{
@@ -101,7 +120,7 @@ var addMode = function(){
 
 //Show hover image of power button
 var hoverPower = function(){
-  if (kitten.powerState==0){
+  if (powerState==0){
     $("#powerPic").attr("src", "images/power_red.png");
   }
   else{
@@ -111,7 +130,7 @@ var hoverPower = function(){
 
 //Revert back to original image of power button
 var hoverOutPower = function(){
-  if (kitten.powerState==0){
+  if (powerState==0){
     $("#powerPic").attr("src", "images/power_gray.png");
   }
   else{
@@ -129,26 +148,21 @@ var hoverOutSetting = function(){
 };
 
 //===== Click functions =====
-
-var counter = setInterval(timer,1000);
+//var counter = setInterval(timer,1000);
 
 var timer = function(){
-  count = count - 1;
-  if (count <= 0)
-  {
-    clearInterval(counter);
-  }
 };
 
 var pormodoro = function(){
-  kitten.timeout = jQuery.now();
-  if (kitten.kitty_mode == 0){
+  timeout = jQuery.now();
+  chrome.storage.sync.set({'timeout': jQuery.now()});
+  if (kitty_mode == 0){
     //start blocking
     bg.switchBlockingOnOff();
   }
   else{
     //turn off blocking
-    bg.switchBlockingOnOff();
+    //bg.switchBlockingOnOff();
   }
 };
 
@@ -157,8 +171,8 @@ var allBlock = function(){
 };
 
 var kittyUseBlock = function(){
-  if(kitten.powerState == 1){
-    if(kitten.study_mode == 0){
+  if(powerState == 1){
+    if(study_mode == 0){
       allBlock();
     }
     else{
@@ -170,10 +184,11 @@ var kittyUseBlock = function(){
 // toggle kitty on/off
 var sleepAndWake = function(){
   // if kitty is on, turn off
-  if (kitten.powerState == 1){
+  if (powerState == 1){
     $("#powerPic").attr("src", "images/power_gray.png");
     $('#kittyPic').attr("src", "");
-    kitten.powerState = 0;
+    powerState = 0;
+	chrome.storage.sync.set({'powerState': powerState});
     if (bg.isBlocking == true){
       bg.switchBlockingOnOff();
     }
@@ -182,7 +197,8 @@ var sleepAndWake = function(){
   else{
     $("#powerPic").attr("src", "images/power_green.png");
     $('#kittyPic').attr("src", "images/kitten-gray.jpg");
-    kitten.powerState = 1;
+    powerState = 1;
+	chrome.storage.sync.set({'powerState': powerState});
     kittyUseBlock();
   }
 };
