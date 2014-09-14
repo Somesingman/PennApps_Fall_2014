@@ -32,7 +32,7 @@ var reset = function(){
 	  // 2 = disappointed
 	  // 3 = sads
 	  // 4 = dedz
-	health = 50; 
+	health = 5; 
 	name = "Sir Fluffykins";
 	kitty_mode = 2;
 	  // 0 = glasses => will have a mood
@@ -84,23 +84,30 @@ var storeKitten = function(newName, health, mood, mode, powerState){
 	newKitten = 
 }
 */
+var url_array = ["*://*.yahoo.com/*", "*://*.reddit.com/*"];
+var urls = {urls : url_array};
 
 // redirecting code
 var host = "http://www.seas.upenn.edu/~yangyun/block.html";
 
-chrome.webRequest.onBeforeRequest.addListener(
-        function() {
-			if(isBlocking){
-				return {redirectUrl: host};
-			}
-		},
-    {
-        urls: [
-            "*://*.yahoo.com/*"
-        ]
-    },
-    ["blocking"]
-);
+var callback = function() {
+	if(isBlocking) {
+		chrome.storage.sync.get('health', function(result){health = result.health;});
+		health--;
+		chrome.storage.sync.set({'health': health});
+		return {redirectUrl: host};
+	}
+};
+
+chrome.webRequest.onBeforeRequest.addListener(callback, urls, ["blocking"]);
+
+chrome.runtime.onMessage.addListener(
+	function(request, sender, sendResponse){
+		chrome.webRequest.onBeforeRequest.removeListener(callback);
+		chrome.webRequest.onBeforeRequest.addListener(callback, urls, ["blocking"]);
+		sendResponse({farewell : "plz"});
+	}
+)
 
 
 
