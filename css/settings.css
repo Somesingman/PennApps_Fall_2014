@@ -11,6 +11,10 @@ textarea {
   width: 130px;
 }
 
+#back_id {
+  margin-top: 15px;
+}
+
 .clickable, #back_id {
   width: 30px;
   height: 30px;
@@ -33,6 +37,11 @@ textarea {
 .linedup{
   display: inline-block;
   margin-right: 10px;
+}
+
+.site {
+  margin-right: 10px;
+  margin-left: 5px;
 }
 
 #main {
