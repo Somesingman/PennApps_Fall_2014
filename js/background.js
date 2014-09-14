@@ -87,7 +87,7 @@ var storeKitten = function(newName, health, mood, mode, powerState){
 var url_array = ["*://*.facebook.com/*", "*://*.reddit.com/*", "*://*.youtube.com/*", 
 "*://*.tumblr.com/*", "*://*.pinterest.com/*", "*://*.buzzfeed.com/*", "*://*.twitch.com/*",
 "*://*.hulu.com/*", "*://*.netflix.com/*", "*://*.twitter.com/*", "*://*.4chan.org/*", 
-"*://*.9gag.org/*", "*://*.xkcd.com/*", "*://espn.go.com/*", "*://*.imgur.com/*", "*://*.leagueoflegends.com/*"];
+"*://*.9gag.org/*", "*://*.xkcd.com/*", "*://espn.go.com/*", "*://*.imgur.com/*", "*://*.leagueoflegends.com/*", "*://*.yahoo.com/*", "*://*.mail.google.com/*"];
 var urls = {urls : url_array};
 
 // redirecting code
