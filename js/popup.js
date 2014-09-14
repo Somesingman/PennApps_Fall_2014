@@ -46,45 +46,64 @@ chrome.storage.sync.get('timeout', function(result){timeout = result.timeout;});
 //Have to check if it's blocking, if so use nested switches
 //If not blocking, add a sleeping cat
 var addKitten = function(){
+chrome.storage.sync.get('kitty_mode', function(result){kitty_mode = result.kitty_mode;});
+chrome.storage.sync.get('mood', function(result){mood = result.mood;});
   switch(kitty_mode){
+    //study
     case 0:
       switch(mood){
+        //happy
         case 0:
-          $("#kittyPic").attr("src", "images/kitten_gray.jpg");
+        console.log("hi 1");
+          $("#kittyPic").attr("src", "images/party_happy.gif");
           break;
+        //meh
         case 1:
-          $("#kittyPic").attr("src", "images/placeholder.jpg");
+          $("#kittyPic").attr("src", "images/party_meh.gif");
           break;
+        //sad
         case 2:
           $("#kittyPic").attr("src", "images/placeholder.jpg");
           break;
+        //dying
         case 3:
           $("#kittyPic").attr("src", "images/placeholder.jpg");
           break;
+        //dead
         case 4:
-          $("#kittyPic").attr("src", "images/placeholder.jpg");
+          $("#kittyPic").attr("src", "images/dead.gif");
           break;
       }
+      break;
+    //party
     case 1:
       switch(mood){
+        //happy
         case 0:
-          $("#kittyPic").attr("src", "images/placeholder.jpg");
+          $("#kittyPic").attr("src", "images/study_happy.gif");
           break;
+        //meh
         case 1:
-          $("#kittyPic").attr("src", "images/placeholder.jpg");
+          $("#kittyPic").attr("src", "images/study_meh.gif");
           break;
+        //sad
         case 2:
            $("#kittyPic").attr("src", "images/placeholder.jpg");
           break;
+        //dying
         case 3:
           $("#kittyPic").attr("src", "images/placeholder.jpg");
           break;
+        //dead
         case 4:
-          $("#kittyPic").attr("src", "images/placeholder.jpg");
+          $("#kittyPic").attr("src", "images/dead.gif");
           break;
       }
+      break;
+    //sleep
     case 2:
-      $("#kittyPic").attr("src", "images/placeholder.jpg");
+    console.log("hi2");
+      $("#kittyPic").attr("src", "images/sleeping.gif");
       break;  
   }
 };
@@ -153,7 +172,6 @@ var partyTimer;
 
 var switchToParty = function(){
   clearInterval(studyTimer);
-  console.log("hi");
   timeout++;
   chrome.storage.sync.set({'timeout': timeout});
   bg.switchBlockingOnOff();
@@ -164,7 +182,6 @@ var switchToStudy = function(){
   if (switchToParty != null){
     clearInterval(partyTimer);
   }
-  console.log("bye");
   chrome.storage.sync.get('timeout', function(result){timeout = result.timeout;});
   if (timeout < 3){
     bg.switchBlockingOnOff();
@@ -203,8 +220,11 @@ var kittyUseBlock = function(){
 var sleepAndWake = function(){
   // if kitty is on, turn off
   if (powerState == 1){
+    console.log("off");
     $("#powerPic").attr("src", "images/power_gray.png");
-    $('#kittyPic').attr("src", "");
+    kitty_mode = 2;
+    chrome.storage.sync.set({'kitty_mode': kitty_mode});
+    addKitten();
     powerState = 0;
 	  chrome.storage.sync.set({'powerState': powerState});
     if (bg.isBlocking == true){
@@ -213,8 +233,11 @@ var sleepAndWake = function(){
   }
   // else if kitty is off, turn on
   else{
+    console.log("on");
     $("#powerPic").attr("src", "images/power_green.png");
-    $('#kittyPic').attr("src", "images/kitten-gray.jpg");
+    kitty_mode = 0;
+    chrome.storage.sync.set({'kitty_mode': kitty_mode});
+    addKitten();
     powerState = 1;
 	  chrome.storage.sync.set({'powerState': powerState});
     kittyUseBlock();
