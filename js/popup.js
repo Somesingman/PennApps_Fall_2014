@@ -25,7 +25,7 @@ var kitten = {
 */
 
 var mood;
-chrome.storage.sync.get('mood', function(result){mood = result.mood; console.log(mood);});
+chrome.storage.sync.get('mood', function(result){mood = result.mood;});
 var health;
 chrome.storage.sync.get('health', function(result){health = result.health;});
 var name;
@@ -218,6 +218,25 @@ var openSettings = function(){
 	window.location.href= "settings.html";
 };
 
+
+var addSite = function() {
+	var website_element = $("textarea");
+	var site = String($.trim(website_element.val()));
+	if (site != ""){
+		bg.url_array.push(site);
+		website_element.val('');
+		chrome.runtime.sendMessage({greeting: "Updated URL"}, function(response) {
+  /*alert(response.farewell);*/});
+		/*chrome.permissions.request({
+			origins: [site]
+		}, function(granted){
+			bg.url_array.push(site);
+			website_element.val('');
+			alert($.inArray(site, bg.url_array));
+		});*/
+	}
+}
+
 //===== Adding listeners and running functions define above =====
 $(document).ready(function(){
   addKitten();
@@ -250,6 +269,9 @@ $(document).ready(function(){
   });
   $(document).on('click', "#submit_id", function(){
     var event_id = event.currentTarget.id;
+  });
+  $(document).on('click', "#add_id", function(){
+	addSite();
   });
 });
 

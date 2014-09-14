@@ -9,7 +9,7 @@
 	"webRequest",
 	"webRequestBlocking",
 	"storage",
-	"*://*.yahoo.com/*"
+	"<all_urls>"
   ],
   "browser_action": {
     "default_icon": "images/icon_off.png",
