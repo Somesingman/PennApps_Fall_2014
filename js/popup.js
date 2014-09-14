@@ -77,6 +77,7 @@ var addKitten = function(){
   chrome.storage.sync.get('mood', function(result){mood = result.mood;});
 
   updateKittyMood();
+  console.log(mood);
   chrome.storage.sync.get('mood', function(result){mood = result.mood;});
 
 
@@ -94,11 +95,11 @@ var addKitten = function(){
           break;
         //sad
         case 2:
-          $("#kittyPic").attr("src", "images/placeholder.jpg");
+          $("#kittyPic").attr("src", "images/study_sad.gif");
           break;
         //dying
         case 3:
-          $("#kittyPic").attr("src", "images/placeholder.jpg");
+          $("#kittyPic").attr("src", "images/study_crazy.gif");
           break;
         //dead
         case 4:
@@ -119,11 +120,11 @@ var addKitten = function(){
           break;
         //sad
         case 2:
-           $("#kittyPic").attr("src", "images/placeholder.jpg");
+           $("#kittyPic").attr("src", "images/party_sad.gif");
           break;
         //dying
         case 3:
-          $("#kittyPic").attr("src", "images/placeholder.jpg");
+          $("#kittyPic").attr("src", "images/party_crazy.gif");
           break;
         //dead
         case 4:
@@ -133,7 +134,12 @@ var addKitten = function(){
       break;
     //sleep
     case 2:
-      $("#kittyPic").attr("src", "images/sleeping.gif");
+      if(mood < 4){
+        $("#kittyPic").attr("src", "images/sleeping.gif");
+      }
+      else{
+        $("#kittyPic").attr("src", "images/dead.gif");
+      }
       break;  
   }
 };
@@ -160,7 +166,25 @@ var addMode = function(){
 
 var addSettings = function(){
   $("#settingsPic").attr("src", "images/gear.png");
-}
+};
+
+var addHand = function(){
+  if(study_mode == 0){
+    $("#block_id").attr("src", "images/hand.png");
+  }
+  else{
+    $("#block_id").attr("src", "images/hand_light.png");
+  }
+};
+
+var addClock = function(){
+  if(study_mode == 1){
+    $("#study_id").attr("src", "images/clock.png");
+  }
+  else{
+    $("#study_id").attr("src", "images/clock_light.png");
+  }
+};
 
 //===== Functions that make buttons responsive =====
 
@@ -184,14 +208,58 @@ var hoverOutPower = function(){
   }
 };
 
+/*************
+Hover functions
+*************/
+
 //Show hover image of settings button
 var hoverSetting = function(){
-  $("#settingsPic").attr("src", "images/power_red.png");
-};
-//Revert back to original image of settings button
-var hoverOutSetting = function(){
   $("#settingsPic").attr("src", "images/gear.png");
 };
+
+//Revert back to original image of settings button
+var hoverOutSetting = function(){
+  $("#settingsPic").attr("src", "images/gear_dark.png");
+};
+
+var hoverBlock_id = function(){
+  if(study_mode != 0){
+    $("#block_id").attr("src", "images/hand.png");
+  }
+};
+
+var hoverOutBlock_id = function(){
+  if(study_mode != 0){
+    $("#block_id").attr("src", "images/hand_light.png");
+  }
+};
+
+var hoverClickBlock_id = function(){
+  if(study_mode != 0){
+    $("#block_id").attr("src", "images/hand_light.png");
+  }
+};
+
+var hoverStudy_id = function(){
+  if(study_mode != 1){
+    $("#study_id").attr("src", "images/clock.png");
+  }
+};
+
+var hoverOutStudy_id = function(){
+  if(study_mode != 1){
+    $("#study_id").attr("src", "images/clock_light.png");
+  }
+};
+
+var hoverBack_id = function(){
+  $("#back_id").attr("src", "images/arrow.png");
+};
+
+var hoverOutBack_id = function(){
+  $("#back_id").attr("src", "images/arrow_light.png");
+};
+
 
 //===== Click and Other functions =====
 
@@ -214,6 +282,10 @@ var switchToStudy = function(){
   }
   chrome.storage.sync.get('timeout', function(result){timeout = result.timeout;});
   if (timeout < 3){
+    chrome.storage.sync.get('health', function(result){health = result.health;});
+    health++;
+    chrome.storage.sync.set({'health': health});
+
     bg.switchBlockingOnOff();
     studyTimer = setInterval(switchToParty, twentyfiveMin);
   }
@@ -307,9 +379,15 @@ var addSite = function() {
 $(document).ready(function(){
     addSettings();
     setTimeout(function(){
+      if (powerState == 0){
+        kitty_mode = 2;
+        chrome.storage.sync.set({'kitty_mode': kitty_mode});
+      }
       addMode();
       addKitten();
       addPowerButton();
+      addClock();
+      addHand();
     }, 200);
 
 
@@ -345,25 +423,53 @@ $(document).ready(function(){
   $('#settingsPic').on('click', function(){
     openSettings();
   });
-  
 
-  /*****************
-  Settings button : Productivity Modes functionality
+
+  /*******************
+  settings.html buttons functionality
   *******************/
+  
+  // 1) block_id  - Works! (all 3 functions)
+  $("#block_id").on('mouseover', function(){
+    hoverBlock_id();
+  });
  
-  //Activate blocking mode
-  $("#block_id").on('click', function(event){
+  $("#block_id").on('mouseleave', function(){
+    hoverOutBlock_id();
+  });
+
+   $("#block_id").on('click', function(event){
+    // add image to indicate button has been clicked
     study_mode = 0;
     chrome.storage.sync.set({'study_mode': study_mode});
+    $("#study_id").attr("src", "images/clock_light.png");
   });
 
-  //Activate study mode
+  // 2) study_id  Works! (all 3 functions)
+  $("#study_id").on('mouseover', function(){
+    hoverStudy_id();
+  });
+ 
+  $("#study_id").on('mouseleave', function(){
+    hoverOutStudy_id();
+  });
+
   $("#study_id").on('click',function(event){
+    // add image to indicate button has been clciked 
     study_mode = 1;
     chrome.storage.sync.set({'study_mode': study_mode});
+    $("#block_id").attr("src", "images/hand_light.png");
   });
 
-  //Confirm final study mode by clicking submit
+  // 3) back_id (Works! - all 3 functions)
+  $("#back_id").on('mouseover', function(){
+    hoverBack_id();
+  });
+ 
+  $("#back_id").on('mouseleave', function(){
+    hoverOutBack_id();
+  });
+
   $("#back_id").on('click',function(event){
     var event_id = event.currentTarget.id;
     if (event_id){
